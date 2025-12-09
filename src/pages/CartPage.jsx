@@ -1,11 +1,11 @@
 import React from 'react';
-import '../styles/_about.scss';
+import '../styles/_cart.scss';
 import HeaderComponent from '../components/HeaderComponent.jsx';
 import FooterComponent from '../components/FooterComponent.jsx';
 
-export default function AboutPage() {
+export default function CartPage() {
     return (
-        <div className="about-page">
+        <div className="cart-page">
             <HeaderComponent />
             <main>
             </main>

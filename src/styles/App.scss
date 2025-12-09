@@ -1,13 +1,13 @@
 //Pages
-@use 'brand';
+@use 'cart';
 @use 'cat-list';
 @use 'front';
 @use 'product';
-@use 'shop-cat';
-@use 'blog';
-@use 'events';
+@use 'profile';
+@use 'shop-page';
+@use 'contact';
+@use 'about';
 
 //Components
 @use 'header';
 @use 'footer';
-@use 'nav';
