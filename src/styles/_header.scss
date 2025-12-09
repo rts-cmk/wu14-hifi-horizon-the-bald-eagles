@@ -1,0 +1,71 @@
+@use './reset';
+@use './variables' as var;
+
+.header {
+	display: flex;
+	width: 100%;
+	background-color: var.$color_black;
+	padding: 21px 34px;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.nav {
+	display: flex;
+
+	&__nav-list {
+		display: flex;
+		list-style: none;
+		gap: 32px;
+		align-items: center;
+	}
+
+	&__nav-item a {
+		color: var.$color_white;
+		text-decoration: none;
+	}
+}
+
+.side-nav {
+	display: flex;
+	gap: 32px;
+	align-items: center;
+
+	&__form {
+		display: flex;
+	}
+
+	&__site-search {
+		width: 175px;
+		height: 38px;
+		border: none;
+		padding: 11px;
+		border-top-left-radius: 2px;
+		border-bottom-left-radius: 2px;
+	}
+
+	&__search-button {
+		height: 38px;
+		border: none;
+		background-color: white;
+		padding: 4px 10px;
+		border-top-right-radius: 2px;
+		border-bottom-right-radius: 2px;
+	}
+
+	&__ul {
+		display: flex;
+		list-style: none;
+		gap: 26px;
+	}
+
+	&__nav-item-profile-icon {
+		width: 23px;
+		height: 26px;
+	}
+
+	&__nav-item-cart-icon {
+		width: 29.42px;
+		height: 26px;
+	}
+}
