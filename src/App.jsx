@@ -5,11 +5,10 @@ import '/src/styles/App.scss'
 import FrontPage from './pages/FrontPage'
 import ProductPage from './pages/ProductPage'
 import AboutPage from './pages/AboutPage'
-import BlogPage from './pages/BlogPage'
-import ShopCategory from './pages/ShopCategory'
-import EventsPage from './pages/EventsPage'
-import CategoryList from './pages/CategoryList'
-import BrandPage from './pages/BrandPage'
+import ProfilePage from './pages/ProfilePage'
+import ShopPage from './pages/ShopPage'
+import ContactPage from './pages/ContactPage'
+import CartPage from './pages/CartPage'
 
 
 function App() {
@@ -21,11 +20,10 @@ function App() {
           <Route path="/" element={<FrontPage />} />
           <Route path="/products/:id" element={<ProductPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/shop/:category" element={<ShopCategory />} />
-          <Route path="/events" element={<EventsPage />} />
-          <Route path="/brands/:brandName" element={<BrandPage />} />
-          <Route path="/categories" element={<CategoryList />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </Router>
     </>

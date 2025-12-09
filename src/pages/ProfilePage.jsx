@@ -1,13 +1,13 @@
 import React from 'react';
-import '../styles/_about.scss';
+import '../styles/_profile.scss';
 import HeaderComponent from '../components/HeaderComponent.jsx';
 import FooterComponent from '../components/FooterComponent.jsx';
 
-export default function AboutPage() {
+export default function ProfilePage() {
     return (
-        <div className="about-page">
+        <div className="profile-page">
             <HeaderComponent />
-            <main>
+            <main className="profile-content">
             </main>
             <FooterComponent />
         </div>
