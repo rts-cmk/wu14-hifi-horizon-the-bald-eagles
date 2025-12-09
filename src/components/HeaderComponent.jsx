@@ -7,7 +7,7 @@ export default function HeaderComponent() {
         <nav className="nav">
             <ul className="nav-list">
                 <li className="nav-item">
-                    <Link to="/"><img src="" alt="" /></Link>
+                    <Link to="/"><img src="" alt="logo" /></Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/shop">SHOP</Link>
@@ -19,10 +19,10 @@ export default function HeaderComponent() {
                     <Link to="/contact">CONTACT US</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/profile"><img src="" alt="" /></Link>
+                    <Link to="/profile"><img src="" alt="profile" /></Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/cart"><img src="" alt="" /></Link>
+                    <Link to="/cart"><img src="" alt="cart" /></Link>
                 </li>
             </ul>
         </nav>
