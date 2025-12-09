@@ -3,22 +3,21 @@
 /*Box-sizing*/
 *,
 *::before,
-*::after
-	box-sizing: border-box
-	margin: 0
-	padding: 0
-
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
 
 html,
 body,
-figure 
-	margin: 0
-	padding: 0
-
+figure {
+	margin: 0;
+	padding: 0;
+}
 
 img,
 video,
-svg 
-	max-width: 100%
-
-
+svg {
+	max-width: 100%;
+}
