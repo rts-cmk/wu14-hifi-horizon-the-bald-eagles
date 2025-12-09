@@ -1,0 +1,35 @@
+@use './reset';
+@use './variables' as var;
+
+.footer {
+	display: flex;
+	flex-direction: column;
+	background-color: var.$color_black;
+	padding: 48px 190px 13px 63px;
+
+	&ul,
+	li,
+	a {
+		list-style: none;
+		color: var.$color_white;
+	}
+
+	&__footer-content {
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+		color: var.$color_white;
+	}
+
+	&__nav {
+		display: flex;
+		flex-direction: column;
+		gap: 27px;
+	}
+
+	&__tc {
+		display: flex;
+		flex-direction: column;
+		gap: 17px;
+	}
+}
