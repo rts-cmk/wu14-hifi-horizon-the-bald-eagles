@@ -1,15 +1,19 @@
+// server.js
 import express from 'express';
-import connectDB from './config/db.js'; // Adjust path as necessary
-// const productRoutes = require('./routes/products'); // Example route
+import connectDB from './config/db.js';
+import productRoutes from './routes/productRoutes.js'; // Import the new route file
 
 // Connect to the database
 connectDB();
 
 const app = express();
 
-// ... other middleware and server setup ...
+// --- Middleware to handle JSON body parsing (important for POST requests later) ---
+app.use(express.json()); 
 
-// app.use('/api/products', productRoutes);
+// --- Use the API Route ---
+// Any request to '/api/products' will be handled by the productRoutes
+app.use('/api/products', productRoutes); 
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
