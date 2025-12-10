@@ -1,0 +1,37 @@
+@use './reset';
+@use './variables' as var;
+
+.dropdown {
+	position: relative;
+}
+
+.dropdown-button {
+	background-color: var.$color_black;
+	color: var.$color_white;
+	border: none;
+	cursor: pointer;
+}
+
+.dropdown-content {
+	position: absolute;
+	overflow-y: auto;
+	overflow: hidden;
+	background-color: var.$color_white;
+	z-index: 20;
+}
+
+.dropdown-content-heading {
+	color: var.$color_black;
+	font-size: 14px;
+}
+
+.dropdown-list {
+}
+
+#dropdown-item {
+	color: var.$color_gold;
+}
+
+.dropdown-item:hover {
+	text-decoration: underline;
+}
