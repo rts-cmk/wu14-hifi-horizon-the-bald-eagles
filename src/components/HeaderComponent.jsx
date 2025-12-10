@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/_header.scss';
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import logo from '../assets/logo/nav-logo.svg';
 import cart from '../assets/icons/cart.svg';
 import profile from '../assets/icons/profile.svg';
@@ -23,24 +23,44 @@ export default function HeaderComponent() {
 							<Dropdown.Button>SHOP</Dropdown.Button>
 							<Dropdown.Content>
 								<Dropdown.List>
-									<h2 className="dropdown-content-heading">Browse Categories</h2>
-									<Dropdown.Item>CD Players</Dropdown.Item>
-									<Dropdown.Item>DVD Players</Dropdown.Item>
-									<Dropdown.Item>Preamps</Dropdown.Item>
-									<Dropdown.Item>Speakers</Dropdown.Item>
-									<Dropdown.Item>Turntables</Dropdown.Item>
-									<Dropdown.Item>Integrated Amplifiers</Dropdown.Item>
-									<Dropdown.Item>Power Amplifiers</Dropdown.Item>
-									<Dropdown.Item>Tube Amplifiers</Dropdown.Item>
+									<h2 className="dropdown-content-heading">
+										Browse Categories
+									</h2>
+									<Dropdown.Item to="/shop/">CD Players</Dropdown.Item>
+									<Dropdown.Item to="/shop/">DVD Players</Dropdown.Item>
+									<Dropdown.Item to="/shop/">Preamps</Dropdown.Item>
+									<Dropdown.Item to="/shop/">Speakers</Dropdown.Item>
+									<Dropdown.Item to="/shop/">Turntables</Dropdown.Item>
+									<Dropdown.Item to="/shop/">
+										Integrated Amplifiers
+									</Dropdown.Item>
+									<Dropdown.Item to="/shop/">Power Amplifiers</Dropdown.Item>
+									<Dropdown.Item to="/shop/">Tube Amplifiers</Dropdown.Item>
 								</Dropdown.List>
 							</Dropdown.Content>
 						</Dropdown>
 					</li>
 					<li className="nav__nav-item">
-						<Link to="/about">ABOUT US</Link>
+						<NavLink
+							to="/about"
+							style={({ isActive }) => {
+								return {
+									fontWeight: isActive ? 'bold' : ''
+								};
+							}}>
+							ABOUT US
+						</NavLink>
 					</li>
 					<li className="nav__nav-item">
-						<Link to="/contact">CONTACT US</Link>
+						<NavLink
+							to="/contact"
+							style={({ isActive }) => {
+								return {
+									fontWeight: isActive ? 'bold' : ''
+								};
+							}}>
+							CONTACT US
+						</NavLink>
 					</li>
 				</ul>
 			</nav>

@@ -5,7 +5,7 @@ import React, {
 	createContext,
 	useContext
 } from 'react';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import '../styles/_dropdown.scss';
 
 //context
@@ -51,6 +51,9 @@ export default function Dropdown({ children, ...props }) {
 //dropdown button
 function DropdownButton({ children, ...props }) {
 	const { open, setOpen } = useContext(DropdownContext);
+	const location = useLocation();
+	const isShopPage =
+		location.pathname === '/shop' || location.pathname.startsWith('/shop/');
 
 	//open and close dropdown
 	function toggleOpen() {
@@ -58,7 +61,10 @@ function DropdownButton({ children, ...props }) {
 	}
 
 	return (
-		<button onClick={toggleOpen} className="dropdown-button">
+		<button
+			onClick={toggleOpen}
+			className="dropdown-button"
+			style={{ fontWeight: isShopPage ? 'bold' : 'normal' }}>
 			{children}
 		</button>
 	);

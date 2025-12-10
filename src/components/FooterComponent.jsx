@@ -39,6 +39,9 @@ export default function FooterComponent() {
 					<li className="footer__tc-item">
 						<Link to="#">Terms & Conditions</Link>
 					</li>
+					<li className="footer__tc-item">
+						<Link to="#">FAQ</Link>
+					</li>
 				</ul>
 
 				<ul className="footer__contact">
