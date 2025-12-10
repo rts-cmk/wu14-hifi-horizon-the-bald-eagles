@@ -8,7 +8,6 @@ import searchIcon from '../assets/icons/search-icon.svg';
 import Dropdown from './Dropdown';
 
 export default function HeaderComponent() {
-<<<<<<< HEAD
 	return (
 		<header className="header">
 			<nav className="nav">
@@ -86,30 +85,3 @@ export default function HeaderComponent() {
 		</header>
 	);
 }
-=======
-    return (
-        <nav className="nav">
-            <ul className="nav-list">
-                <li className="nav-item">
-                    <Link to="/"></Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/shop">SHOP</Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/about">ABOUT US</Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/contact">CONTACT US</Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/profile"></Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/cart"></Link>
-                </li>
-            </ul>
-        </nav>
-    );
-}
->>>>>>> 0c629e92a42bd47a5333a3efda3005baa84f506a

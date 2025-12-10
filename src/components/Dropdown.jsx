@@ -1,22 +1,31 @@
-import React from 'react';
+import React, {
+	useState,
+	useEffect,
+	useRef,
+	createContext,
+	useContext
+} from 'react';
 import { Link } from 'react-router';
 import '../styles/_dropdown.scss';
 
 //context
-const DropdownContext = React.createContext({
+const DropdownContext = createContext({
 	open: false,
 	setOpen: () => {}
 });
 
 //dropdown component
 export default function Dropdown({ children, ...props }) {
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
+	const dropdownRef = useRef(null);
 
 	//click listeners for closing dropdown
-	React.useEffect(() => {
+	useEffect(() => {
 		//close dropdown
-		function close() {
-			setOpen(false);
+		function close(event) {
+			if (!dropdownRef.current.contains(event.target)) {
+				setOpen(false);
+			}
 		}
 
 		//add / remove event listener
@@ -32,14 +41,16 @@ export default function Dropdown({ children, ...props }) {
 
 	return (
 		<DropdownContext.Provider value={{ open, setOpen }}>
-			<div className="dropdown">{children}</div>
+			<div ref={dropdownRef} className="dropdown">
+				{children}
+			</div>
 		</DropdownContext.Provider>
 	);
 }
 
 //dropdown button
 function DropdownButton({ children, ...props }) {
-	const { open, setOpen } = React.useContext(DropdownContext);
+	const { open, setOpen } = useContext(DropdownContext);
 
 	//open and close dropdown
 	function toggleOpen() {
@@ -58,7 +69,9 @@ Dropdown.Button = DropdownButton;
 //dropdown content
 
 function DropdownContent({ children }) {
-	const { open } = React.useContext(DropdownContext);
+	const { open } = useContext(DropdownContext);
+
+	if (!open) return null;
 
 	return <div className="dropdown-content">{children}</div>;
 }
@@ -67,7 +80,7 @@ Dropdown.Content = DropdownContent;
 
 //dropdown list for dropdown menu
 function DropdownList({ children, ...props }) {
-	const { setOpen } = React.useContext(DropdownContext);
+	const { setOpen } = useContext(DropdownContext);
 
 	return (
 		<ul onClick={() => setOpen(false)} className="dropdown-list" {...props}>
