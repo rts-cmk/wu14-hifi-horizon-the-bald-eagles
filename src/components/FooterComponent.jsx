@@ -42,7 +42,7 @@ export default function FooterComponent() {
 				</ul>
 
 				<ul className="footer__contact">
-					<li className="footer__contact-item">Contact</li>
+					<li className="footer__contact-item-heading">Contact</li>
 					<li className="footer__contact-item">
 						2 Joppa Rd, Edinburgh, EH15 2EU
 					</li>

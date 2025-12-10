@@ -3,7 +3,10 @@
 
 .header {
 	display: flex;
-	width: 100%;
+	width: 100svw;
+	height: auto;
+	position: fixed;
+	top: 0;
 	background-color: var.$color_black;
 	padding: 21px 34px;
 	align-items: center;
