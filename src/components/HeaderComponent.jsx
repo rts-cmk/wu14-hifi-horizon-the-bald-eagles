@@ -92,13 +92,24 @@ export default function HeaderComponent() {
 						</Link>
 					</li>
 					<li className="side-nav__nav-item">
-						<Link to="/cart">
-							<img
-								src={cart}
-								alt="cart"
-								className="side-nav__nav-item-cart-icon"
-							/>
-						</Link>
+						<Dropdown>
+							<Dropdown.Button>
+								<img
+									src={cart}
+									alt="cart"
+									className="side-nav__nav-item-cart-icon"
+								/>
+							</Dropdown.Button>
+							<Dropdown.Content>
+								<h2>Cart</h2>
+								<p>Sub total:</p>
+								<Link to="/cart/">
+									{' '}
+									<input type="button" value="Go to cart" />
+								</Link>
+								<input type="button" value="Go to payment" />
+							</Dropdown.Content>
+						</Dropdown>
 					</li>
 				</ul>
 			</div>
