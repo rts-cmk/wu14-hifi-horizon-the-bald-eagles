@@ -1,22 +1,62 @@
-import React from 'react';
+// HeaderComponent.jsx
+
+import React, { useState } from 'react';
 import '../styles/_header.scss';
-import { Link, NavLink } from 'react-router';
+// IMPORTS UPDATED: Using 'react-router' as specified
+import { Link, NavLink } from 'react-router'; 
 import logo from '../assets/logo/nav-logo.svg';
 import cart from '../assets/icons/cart.svg';
 import profile from '../assets/icons/profile.svg';
 import searchIcon from '../assets/icons/search-icon.svg';
-import Dropdown from './Dropdown';
+import Dropdown from './Dropdown'; // Assuming this component exists
 
+// Component now accepts props for search and category filtering
 export default function HeaderComponent({ setSearchTerm, setSelectedCategory, allCategories }) {
+    
+    const [localSearchTerm, setLocalSearchTerm] = useState('');
 
-	const handleSearchChange = (event) => {
-		setSearchTerm(event.target.value);
-		setSelectedCategory('');
-	};
+    // Handle typing in the search bar (updates filter state in ShopPage)
+    const handleSearchChange = (event) => {
+        const value = event.target.value;
+        setLocalSearchTerm(value);
+        setSearchTerm(value); 
+        setSelectedCategory(''); // Optional: Clear category filter on new search
+    };
 
-	const handleSearchSubmit = (event) => {
-		event.preventDefault();
-	};
+    // Prevent the form from performing a default HTML submission (page reload)
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+    };
+    
+    // Function to handle category click from the dropdown
+    const handleCategoryClick = (categorySlug) => {
+        setSelectedCategory(categorySlug);
+        setSearchTerm(''); // Clear search filter when selecting a category
+        setLocalSearchTerm(''); // Clear local search state
+    }
+    
+    // Helper to clean up category slugs for display
+    const formatCategoryForDisplay = (slug) => {
+        if (!slug) return 'ALL PRODUCTS';
+        
+        const translations = {
+            'cdafspillere': 'CD PLAYERS',
+            'dvdafspillere': 'DVD PLAYERS',
+            'forforstærkere': 'PREAMPS',
+            'højtalere': 'SPEAKERS',
+            'pladespillere': 'TURNTABLES',
+            'intforstærker': 'INTEGRATED AMPLIFIERS',
+            'effektforstærkere': 'POWER AMPLIFIERS',
+            'rørforstærkere': 'TUBE AMPLIFIERS'
+        };
+
+        if (translations[slug]) {
+            return translations[slug];
+        }
+        
+        return slug.replace(/([A-Z])/g, ' $1').toUpperCase();
+    }
+
 
 	return (
 		<header className="header">
@@ -28,7 +68,6 @@ export default function HeaderComponent({ setSearchTerm, setSelectedCategory, al
 						</Link>
 					</li>
 					<li className="nav__nav-item">
-						{/* <Link to="/shop">SHOP</Link> */}
 						<Dropdown>
 							<Dropdown.Button>SHOP</Dropdown.Button>
 							<Dropdown.Content>
@@ -36,77 +75,26 @@ export default function HeaderComponent({ setSearchTerm, setSelectedCategory, al
 									<h2 className="dropdown-content-heading">
 										Browse Categories
 									</h2>
-									{/* ALL PRODUCTS */}
-									<Dropdown.Item
-										to="/shop/"
-										onClick={() => setSelectedCategory('')}>
-										All Products
-									</Dropdown.Item>
-									
-									{/* CD PLAYERS */}
-									<Dropdown.Item
-										key={category}
-										to={`/shop?category=${category}`}
-										onClick={() => setSelectedCategory('cdafspillere')}
-									>
-										{category.toUpperCase().replace(/cdafspillere/g, 'CD Players')}
-									</Dropdown.Item>
-									
-									{/* DVD PLAYERS */}
-									<Dropdown.Item
-										key={category}
-										to={`/shop?category=${category}`}
-										onClick={() => setSelectedCategory('dvdafspillere')}>
-										DVD Players
-									</Dropdown.Item>
+                                    
+                                    {/* Link for All Products (Clears filter) */}
+                                    <Dropdown.Item 
+                                        to="/shop" 
+                                        onClick={() => handleCategoryClick('')}
+                                    >
+                                        {formatCategoryForDisplay('')}
+                                    </Dropdown.Item>
 
-									{/* PREAMPS */}
-									<Dropdown.Item
-										key={category}
-										to={`/shop?category=${category}`}
-										onClick={() => setSelectedCategory('forforstaerkere')}>
-										Preamps
-									</Dropdown.Item>
+                                    {/* Dynamically generated categories from normalized data */}
+                                    {allCategories && allCategories.map(category => (
+                                        <Dropdown.Item 
+                                            key={category} 
+                                            to={`/shop?category=${category}`}
+                                            onClick={() => handleCategoryClick(category)}
+                                        >
+                                            {formatCategoryForDisplay(category)}
+                                        </Dropdown.Item>
+                                    ))}
 
-									{/* SPEAKERS */}
-									<Dropdown.Item
-										key={category}
-										to={`/shop?category=${category}`}
-										onClick={() => setSelectedCategory('hoejtalere')}>
-										Speakers
-									</Dropdown.Item>
-
-									{/* TURNTABLES */}
-									<Dropdown.Item
-										key={category}
-										to={`/shop?category=${category}`}
-										onClick={() => setSelectedCategory('pladespillere')}>
-										Turntables
-									</Dropdown.Item>
-
-									{/* INT AMPLIFIERS */}
-									<Dropdown.Item
-										key={category}
-										to={`/shop?category=${category}`}
-										onClick={() => setSelectedCategory('intforstaerkere')}>
-										Integrated Amplifiers
-									</Dropdown.Item>
-
-									{/* POW AMPLIFIERS */}
-									<Dropdown.Item
-										key={category}
-										to={`/shop?category=${category}`}
-										onClick={() => setSelectedCategory('effektforstaerkere')}>
-										Power Amplifiers
-									</Dropdown.Item>
-
-									{/* TUB AMPLIFIERS */}
-									<Dropdown.Item
-										key={category}
-										to={`/shop?category=${category}`}
-										onClick={() => setSelectedCategory('roerforstaerkere')}>
-										Tube Amplifiers
-									</Dropdown.Item>
 								</Dropdown.List>
 							</Dropdown.Content>
 						</Dropdown>
@@ -136,14 +124,16 @@ export default function HeaderComponent({ setSearchTerm, setSelectedCategory, al
 				</ul>
 			</nav>
 			<div className="side-nav">
-				<form className="side-nav__form">
+				<form className="side-nav__form" onSubmit={handleSearchSubmit}>
 					<input
 						type="search"
 						name="search"
 						className="side-nav__site-search"
 						placeholder="Search product..."
+                        value={localSearchTerm}
+                        onChange={handleSearchChange}
 					/>
-					<button className="side-nav__search-button">
+					<button className="side-nav__search-button" type="submit">
 						<img
 							src={searchIcon}
 							alt="search icon"
@@ -152,7 +142,6 @@ export default function HeaderComponent({ setSearchTerm, setSelectedCategory, al
 					</button>
 				</form>
 				<ul className="side-nav__ul">
-					{' '}
 					<li className="side-nav__nav-item">
 						<Link to="/profile">
 							<img
