@@ -1,0 +1,48 @@
+@use './variables' as var;
+@use './reset';
+
+.shopPage {
+    
+    .shopPage-product-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    
+    .shopPage-product-item {
+        background-color: var.$color_white;
+        border: 1px solid var.$color_gray;
+        padding: 10px;
+        text-align: center;
+    
+        .product-image {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+        }
+    
+        .product-name {
+        font-size: 18px;
+        color: var.$color_black;
+        margin-bottom: 5px;
+        }
+    
+        .product-price {
+        font-size: 16px;
+        color: var.$color_gold;
+        margin-bottom: 10px;
+        }
+    
+        .add-to-cart-button {
+        background-color: var.$color_black;
+        color: var.$color_white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+    
+        &:hover {
+            background-color: var.$color_dark_gray;
+        }
+        }
+    }
+}
