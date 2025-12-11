@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/_header.scss';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useLocation } from 'react-router';
 import logo from '../assets/logo/nav-logo.svg';
 import cart from '../assets/icons/cart.svg';
 import profile from '../assets/icons/profile.svg';
@@ -8,6 +8,15 @@ import searchIcon from '../assets/icons/search-icon.svg';
 import Dropdown from './Dropdown';
 
 export default function HeaderComponent() {
+	const location = useLocation();
+	const isCartPage =
+		location.pathname === '/cart/' || location.pathname.startsWith('/cart/');
+	const isPaymentPage =
+		location.pathname === '/payment/' ||
+		location.pathname.startsWith('/payment/');
+	const isInvoicePage =
+		location.pathname === '/invoice/' ||
+		location.pathname.startsWith('/invoice/');
 	return (
 		<header className="header">
 			<nav className="nav">
@@ -100,6 +109,14 @@ export default function HeaderComponent() {
 										alt="cart"
 										className="side-nav__nav-item-cart-icon"
 									/>
+									<span
+										className="side-nav__nav-item-cart-underline"
+										style={{
+											display:
+												isCartPage || isPaymentPage || isInvoicePage
+													? 'block'
+													: 'none'
+										}}></span>
 									<span className="side-nav__nav-item-cart-counter">0</span>
 								</div>
 							</Dropdown.Button>

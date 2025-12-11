@@ -1,0 +1,14 @@
+@use './reset';
+@use './variables' as var;
+
+.contact-page {
+	display: flex;
+	flex-direction: column;
+	background-color: var.$color_cream;
+	min-height: 100svh;
+
+	main {
+		flex: 1;
+		padding: 20px;
+	}
+}
