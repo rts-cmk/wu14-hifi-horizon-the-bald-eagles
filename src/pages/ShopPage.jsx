@@ -32,17 +32,18 @@ export default function ShopPage() {
 
     }, []);
 
+
     return (
-        <div className="shop-page">
+        <div className="shopPage">
             <HeaderComponent />
             <main>
                 <h1 className='mainTitle'>PRODUCTS</h1>
                 <div className='sortProducts'></div>
                 <section className='productsGrid'>
-                    <ul>
+                    <ul className='shopPage-product-list'>
                         <li className='product'>
-                            <div>compare</div>
-                            <img src="" alt="" />
+                            <div className='compare'></div>
+                            <img src="#" alt="image" />
                             <h2>Product 1</h2>
                             <p>price</p>
                             <button>add to cart</button>
