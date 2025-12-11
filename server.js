@@ -17,6 +17,10 @@ app.get('/test-200', (req, res) => {
     res.status(200).json({ status: 'OK', message: 'Local test succeeded!' });
 });
 
+app.get('/', (req, res) => {
+    res.send('/api/products/', productRoutes);
+});
+
 // --- Middleware to handle JSON body parsing (important for POST requests later) ---
 app.use(express.json()); 
 
