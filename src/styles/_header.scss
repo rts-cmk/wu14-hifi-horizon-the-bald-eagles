@@ -68,8 +68,30 @@
 		height: 26px;
 	}
 
+	&__nav-item-cart-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+	}
+
 	&__nav-item-cart-icon {
 		width: 29.42px;
 		height: 26px;
+	}
+
+	&__nav-item-cart-counter {
+		position: absolute;
+		top: -8px;
+		right: -5px;
+		background-color: var.$color_orange;
+		color: var.$color_white;
+		border-radius: 50%;
+		width: 15px;
+		height: 15px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 10px;
 	}
 }

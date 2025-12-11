@@ -94,11 +94,14 @@ export default function HeaderComponent() {
 					<li className="side-nav__nav-item">
 						<Dropdown>
 							<Dropdown.Button>
-								<img
-									src={cart}
-									alt="cart"
-									className="side-nav__nav-item-cart-icon"
-								/>
+								<div className="side-nav__nav-item-cart-container">
+									<img
+										src={cart}
+										alt="cart"
+										className="side-nav__nav-item-cart-icon"
+									/>
+									<span className="side-nav__nav-item-cart-counter">0</span>
+								</div>
 							</Dropdown.Button>
 							<Dropdown.Content>
 								<h2>Cart</h2>
