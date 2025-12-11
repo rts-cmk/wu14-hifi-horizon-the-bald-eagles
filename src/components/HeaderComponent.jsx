@@ -7,7 +7,17 @@ import profile from '../assets/icons/profile.svg';
 import searchIcon from '../assets/icons/search-icon.svg';
 import Dropdown from './Dropdown';
 
-export default function HeaderComponent() {
+export default function HeaderComponent({ setSearchTerm, setSelectedCategory, allCategories }) {
+
+	const handleSearchChange = (event) => {
+		setSearchTerm(event.target.value);
+		setSelectedCategory('');
+	};
+
+	const handleSearchSubmit = (event) => {
+		event.preventDefault();
+	};
+
 	return (
 		<header className="header">
 			<nav className="nav">
@@ -26,16 +36,77 @@ export default function HeaderComponent() {
 									<h2 className="dropdown-content-heading">
 										Browse Categories
 									</h2>
-									<Dropdown.Item to="/shop/">CD Players</Dropdown.Item>
-									<Dropdown.Item to="/shop/">DVD Players</Dropdown.Item>
-									<Dropdown.Item to="/shop/">Preamps</Dropdown.Item>
-									<Dropdown.Item to="/shop/">Speakers</Dropdown.Item>
-									<Dropdown.Item to="/shop/">Turntables</Dropdown.Item>
-									<Dropdown.Item to="/shop/">
+									{/* ALL PRODUCTS */}
+									<Dropdown.Item
+										to="/shop/"
+										onClick={() => setSelectedCategory('')}>
+										All Products
+									</Dropdown.Item>
+									
+									{/* CD PLAYERS */}
+									<Dropdown.Item
+										key={category}
+										to={`/shop?category=${category}`}
+										onClick={() => setSelectedCategory('cdafspillere')}
+									>
+										{category.toUpperCase().replace(/cdafspillere/g, 'CD Players')}
+									</Dropdown.Item>
+									
+									{/* DVD PLAYERS */}
+									<Dropdown.Item
+										key={category}
+										to={`/shop?category=${category}`}
+										onClick={() => setSelectedCategory('dvdafspillere')}>
+										DVD Players
+									</Dropdown.Item>
+
+									{/* PREAMPS */}
+									<Dropdown.Item
+										key={category}
+										to={`/shop?category=${category}`}
+										onClick={() => setSelectedCategory('forforstaerkere')}>
+										Preamps
+									</Dropdown.Item>
+
+									{/* SPEAKERS */}
+									<Dropdown.Item
+										key={category}
+										to={`/shop?category=${category}`}
+										onClick={() => setSelectedCategory('hoejtalere')}>
+										Speakers
+									</Dropdown.Item>
+
+									{/* TURNTABLES */}
+									<Dropdown.Item
+										key={category}
+										to={`/shop?category=${category}`}
+										onClick={() => setSelectedCategory('pladespillere')}>
+										Turntables
+									</Dropdown.Item>
+
+									{/* INT AMPLIFIERS */}
+									<Dropdown.Item
+										key={category}
+										to={`/shop?category=${category}`}
+										onClick={() => setSelectedCategory('intforstaerkere')}>
 										Integrated Amplifiers
 									</Dropdown.Item>
-									<Dropdown.Item to="/shop/">Power Amplifiers</Dropdown.Item>
-									<Dropdown.Item to="/shop/">Tube Amplifiers</Dropdown.Item>
+
+									{/* POW AMPLIFIERS */}
+									<Dropdown.Item
+										key={category}
+										to={`/shop?category=${category}`}
+										onClick={() => setSelectedCategory('effektforstaerkere')}>
+										Power Amplifiers
+									</Dropdown.Item>
+
+									{/* TUB AMPLIFIERS */}
+									<Dropdown.Item
+										key={category}
+										to={`/shop?category=${category}`}
+										onClick={() => setSelectedCategory('roerforstaerkere')}>
+										Tube Amplifiers
+									</Dropdown.Item>
 								</Dropdown.List>
 							</Dropdown.Content>
 						</Dropdown>
