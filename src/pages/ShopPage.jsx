@@ -5,10 +5,23 @@ import FooterComponent from '../components/FooterComponent.jsx';
 import FilterSidebar from '../components/FilterSidebar.jsx';
 import ProductGrid from '../components/ProductGrid.jsx';
 import { useProducts } from '../context/ProductContext.jsx';
+import { useLocation } from 'react-router';
 
 export default function ShopPage() {
 
     const { products, loading, error, allCategories } = useProducts();
+
+    const location = useLocation();
+
+    const urlParams = useMemo(() => {
+
+        const params = new URLSearchParams(location.search);
+
+        return {
+            searchTerm: params.get('q') || '',
+            selectedCategory: params.get('category') || ''
+        };
+    }, [location.search]);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -17,13 +30,13 @@ export default function ShopPage() {
         let currentProducts = products;
 
         // Filter by category
-        if (selectedCategory) {
+        if (urlParams.selectedCategory) {
             currentProducts = currentProducts.filter(product =>
                 product.category === selectedCategory
             );
         }
         // Filter by search term
-        if (searchTerm) {
+        if (urlParams.searchTerm) {
             const lowerCaseSearchTerm = searchTerm.toLowerCase();
             currentProducts = currentProducts.filter(product =>
                 
@@ -34,23 +47,20 @@ export default function ShopPage() {
         }
 
         return currentProducts;
-    }, [products, searchTerm, selectedCategory]);
+    }, [products, urlParams.searchTerm, urlParams.selectedCategory]);
+
+    console.log('Filtered Products:', filteredProducts);
 
     if (loading) return <p>Loading products..</p>
     if (error) return <p>Error: {error}</p>
 
     return (
         <div className="shopPage">
-            <HeaderComponent
-                setSearchTerm={setSearchTerm}
-                setSelectedCategory={setSelectedCategory}
-                allCategories={allCategories}
-            />
+            <HeaderComponent />
             <main className='shopPage__content-area'>
                 <FilterSidebar
                     allCategories={allCategories}
-                    setSelectedCategory={setSelectedCategory}
-                    selectedCategory={selectedCategory}
+                    selectedCategory={urlParams.selectedCategory}
                 />
                 <ProductGrid products={filteredProducts} />
             </main>
