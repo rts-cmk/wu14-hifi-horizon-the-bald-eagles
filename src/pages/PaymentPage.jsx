@@ -11,6 +11,7 @@ export default function PaymentPage() {
 			<main>
 				<CartRoute />
 				<h1 className="payment-page__title">Your info</h1>
+				<form></form>
 			</main>
 			<FooterComponent />
 		</div>
