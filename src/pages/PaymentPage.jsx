@@ -10,6 +10,7 @@ export default function PaymentPage() {
 			<HeaderComponent />
 			<main>
 				<CartRoute />
+				<h1 className="payment-page__title">Your info</h1>
 			</main>
 			<FooterComponent />
 		</div>

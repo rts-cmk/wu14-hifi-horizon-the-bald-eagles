@@ -7,6 +7,12 @@
 	background-color: var.$color_cream;
 	min-height: 100svh;
 
+	&__title {
+		font-size: 26px;
+		font-weight: 700;
+		color: var.$color_dark_gray;
+	}
+
 	main {
 		flex: 1;
 		padding: 20px;
