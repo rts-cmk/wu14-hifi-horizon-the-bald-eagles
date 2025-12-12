@@ -15,7 +15,8 @@ export default function ProductGrid({ products }) {
                         <img src={product.image} alt="{product.model}" className='product-grid__image' />
                         <h3 className='product-grid__model'>{product.model}</h3>
                         <p className='product-grid__brand'>{product.brand}</p>
-                        <p className='product-grid__price'>{product.price}</p>
+                        <p className='product-grid__price'>£ {product.price},-</p>
+                        <button className="add-to-cart-btn">Add to cart</button>
                     </Link>
             ))}
         </div>

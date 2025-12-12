@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import '../styles/_shop-page.scss';
 import HeaderComponent from '../components/HeaderComponent.jsx';
 import FooterComponent from '../components/FooterComponent.jsx';
@@ -23,21 +23,18 @@ export default function ShopPage() {
         };
     }, [location.search]);
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('');
-
     const filteredProducts = useMemo(() => {
         let currentProducts = products;
 
         // Filter by category
         if (urlParams.selectedCategory) {
             currentProducts = currentProducts.filter(product =>
-                product.category === selectedCategory
+                product.category === urlParams.selectedCategory
             );
         }
         // Filter by search term
         if (urlParams.searchTerm) {
-            const lowerCaseSearchTerm = searchTerm.toLowerCase();
+            const lowerCaseSearchTerm = urlParams.searchTerm.toLowerCase();
             currentProducts = currentProducts.filter(product =>
                 
                 product.model.toLowerCase().includes(lowerCaseSearchTerm) ||
@@ -57,6 +54,7 @@ export default function ShopPage() {
     return (
         <div className="shopPage">
             <HeaderComponent />
+                <h2 className='shopPage__heading'>PRODUCTS</h2>
             <main className='shopPage__content-area'>
                 <FilterSidebar
                     allCategories={allCategories}
