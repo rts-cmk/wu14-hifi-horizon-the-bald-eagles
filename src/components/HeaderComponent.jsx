@@ -1,26 +1,24 @@
-// HeaderComponent.jsx
-
 import React, { useState } from 'react';
 import '../styles/_header.scss';
-// IMPORTS UPDATED: Using 'react-router' as specified
 import { Link, NavLink } from 'react-router'; 
 import logo from '../assets/logo/nav-logo.svg';
 import cart from '../assets/icons/cart.svg';
 import profile from '../assets/icons/profile.svg';
 import searchIcon from '../assets/icons/search-icon.svg';
-import Dropdown from './Dropdown'; // Assuming this component exists
+import Dropdown from './Dropdown';
+import { useProducts } from '../context/ProductContext.jsx';
 
 // Component now accepts props for search and category filtering
-export default function HeaderComponent({ setSearchTerm, setSelectedCategory, allCategories }) {
-    
+export default function HeaderComponent() {
+
+	const { allCategories } = useProducts();
+
     const [localSearchTerm, setLocalSearchTerm] = useState('');
 
     // Handle typing in the search bar (updates filter state in ShopPage)
     const handleSearchChange = (event) => {
         const value = event.target.value;
         setLocalSearchTerm(value);
-        setSearchTerm(value); 
-        setSelectedCategory(''); // Optional: Clear category filter on new search
     };
 
     // Prevent the form from performing a default HTML submission (page reload)
@@ -29,10 +27,8 @@ export default function HeaderComponent({ setSearchTerm, setSelectedCategory, al
     };
     
     // Function to handle category click from the dropdown
-    const handleCategoryClick = (categorySlug) => {
-        setSelectedCategory(categorySlug);
-        setSearchTerm(''); // Clear search filter when selecting a category
-        setLocalSearchTerm(''); // Clear local search state
+    const handleCategoryClick = () => {
+        setLocalSearchTerm(''); 
     }
     
     // Helper to clean up category slugs for display
@@ -42,12 +38,12 @@ export default function HeaderComponent({ setSearchTerm, setSelectedCategory, al
         const translations = {
             'cdafspillere': 'CD PLAYERS',
             'dvdafspillere': 'DVD PLAYERS',
-            'forforstærkere': 'PREAMPS',
-            'højtalere': 'SPEAKERS',
+            'forforstaerkere': 'PREAMPS',
+            'hoejtalere': 'SPEAKERS',
             'pladespillere': 'TURNTABLES',
-            'intforstærker': 'INTEGRATED AMPLIFIERS',
-            'effektforstærkere': 'POWER AMPLIFIERS',
-            'rørforstærkere': 'TUBE AMPLIFIERS'
+            'intforstaerker': 'INTEGRATED AMPLIFIERS',
+            'effektforstaerkere': 'POWER AMPLIFIERS',
+            'roerforstaerkere': 'TUBE AMPLIFIERS'
         };
 
         if (translations[slug]) {

@@ -22,7 +22,7 @@ export default function FilterSidebar({ allCategories, setSelectedCategory, sele
                         className={`filter-sidebar__item ${selectedCategory === category ? 'filter-sidebar__item--active' : ''} `}
                         onClick={() => handleCategoryClick(category)}
                     >
-                        {category.toUppercase().replace(/CDAFSPILLERE/g, 'CD PLAYERS')}
+                        {category.toUpperCase().replace(/CDAFSPILLERE/g, 'CD PLAYERS')}
                     </li>
                 ))}
             </ul>
