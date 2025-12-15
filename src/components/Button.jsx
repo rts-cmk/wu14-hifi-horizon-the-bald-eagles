@@ -7,7 +7,7 @@ export default function Button({
 	variant = 'primary',
 	size = 'medium',
 	type = 'button',
-	active = 'false',
+	active = false,
 	fullWidth = false
 }) {
 	const classNames = [
@@ -15,7 +15,7 @@ export default function Button({
 		`button__${variant}`,
 		`button__${size}`,
 		fullWidth && 'button__full-width',
-		active && 'button__active'
+		active && `button__${variant}__active`
 	]
 		.filter(Boolean)
 		.join(' ');

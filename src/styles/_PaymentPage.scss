@@ -14,7 +14,21 @@
 	}
 
 	main {
+		display: flex;
+		flex-direction: column;
 		flex: 1;
 		padding: 20px;
+		gap: 40px;
+	}
+
+	&__delivery-title {
+		font-size: 26px;
+		font-weight: 700;
+		color: var.$color_dark_gray;
+	}
+
+	&__delivery-button-container {
+		display: flex;
+		gap: 15px;
 	}
 }
