@@ -115,6 +115,32 @@
         }
     }
 
+    &__info-bar {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: auto; 
+    }
+
+    &__stock-status {
+        font-size: 0.8em;
+        font-weight: bold;
+        padding: 4px 8px;
+        border-radius: 3px;
+        margin-bottom: 8px;
+        
+        &--in-stock {
+            color: #38761d; 
+            background-color: #d9ead3; 
+        }
+        
+        &--out-stock {
+            color: #cc0000; 
+            background-color: #f4cccc; 
+        }
+    }
+
     &__image {
         width: 200px;
         position: relative;
