@@ -37,13 +37,10 @@ export default function FilterSidebar({ allCategories, selectedCategory }) {
             navigate(`/shop?category=${categorySlug}`);
         }
     }
-    
-    // Note: The screenshot shows more filters (Brand, Color, Price). 
-    // For now, we only implement the Category filter logic.
+
     return (
         <aside className="shopPage__filter-sidebar">
             
-            {/* --- Category Filter (Mapped from Context) --- */}
             <div className="filter-block">
                 <h3 className="filter-sidebar__heading">Sort by Category</h3> 
                 <ul className='filter-sidebar__list'>
@@ -67,9 +64,6 @@ export default function FilterSidebar({ allCategories, selectedCategory }) {
                     ))}
                 </ul>
             </div>
-            
-            {/* --- Placeholder for other filters (Brand, Color, Price) --- */}
-            {/* You would implement full filter logic here, but for now, they are just visual placeholders */}
             
             <div className="filter-block">
                 <h3 className="filter-sidebar__heading">Brand</h3>

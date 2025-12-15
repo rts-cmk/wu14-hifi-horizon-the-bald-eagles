@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useMemo, useContext } from 'react';
+import React, { createContext, useState, useEffect, useMemo, useContext, useCallback } from 'react';
 
 // Create the Context object
 export const ProductContext = createContext();
@@ -46,6 +46,10 @@ export const ProductProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const getProductByID = useCallback((id) => {
+        return products.find(p => p.id === id);
+    }, [products]);
+
     // Fetch and Normalize Data on initial load
     useEffect(() => {
         const fetchProducts = async () => {
@@ -80,8 +84,9 @@ export const ProductProvider = ({ children }) => {
         products,
         allCategories,
         loading,
-        error
-    }), [products, allCategories, loading, error]);
+        error,
+        getProductByID
+    }), [products, allCategories, loading, error, getProductByID]);
 
     return (
         <ProductContext.Provider value={contextValue}>
