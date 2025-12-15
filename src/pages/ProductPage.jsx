@@ -79,6 +79,7 @@ export default function ProductPage() {
         <div className="product-page">
             <HeaderComponent />
             <main>
+                <h2 className='product-page__heading'>PRODUCT</h2>
                 <ProductDetail product={product} />
             </main>
             <FooterComponent />

@@ -8,12 +8,16 @@ export default function ProductDetail({ product }) {
 
     const isAvailable = product['in-stock'];
     const stockStatusText = isAvailable ? 'In Stock' : 'Out of Stock';
+    const imagePath = product.image.startsWith('/') 
+    ? product.image 
+    : `/${product.image}`;
 
     return (
         <div className='product-detail'>
+
             <div className='product-detail__product-content'>
                 <img
-                    src={product.image}
+                    src={imagePath}
                     alt={product.model}
                     className='product-detail__image'
                 />

@@ -1,0 +1,29 @@
+// The outer wrapper for the page
+.product-page {
+    margin-top: 100px;
+}
+
+.product-detail {
+    // Basic spacing for the whole detail area
+    padding-top: 2rem;
+    margin-bottom: 5rem;
+}
+
+// Global Product Heading
+.product-page__heading {
+    font-size: 2.5em;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    margin: 140px 0 0 20px;
+    padding-bottom: 10px;
+    color: #333;
+}
+
+.product-detail__product-content {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
