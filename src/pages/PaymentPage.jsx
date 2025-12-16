@@ -4,6 +4,11 @@ import HeaderComponent from '../components/HeaderComponent';
 import FooterComponent from '../components/FooterComponent';
 import CartRoute from '../components/CartRoute';
 import Button from '../components/Button';
+import stripeIcon from '../assets/pay/stripe.svg';
+import visaIcon from '../assets/pay/visa.svg';
+import masterCardIcon from '../assets/pay/mastercard.svg';
+import paypalIcon from '../assets/pay/paypal.svg';
+import applepayIcon from '../assets/pay/applepay.svg';
 
 export default function PaymentPage() {
 	// Track which button is active: 'home', 'collect', or 'postoffice'
@@ -263,6 +268,35 @@ export default function PaymentPage() {
 								</li>
 							</ul>
 						)}
+					</div>
+
+					<div className="payment-page__payment-method-container">
+						<h2 className="payment-page__payment-method-title">
+							Choose payment method
+						</h2>
+						<ul>
+							<li>
+								<input type="radio" />
+								<div>
+									<img src={stripeIcon} alt="stripe icon" />
+									<img src={visaIcon} alt="visa icon" />
+									<img src={masterCardIcon} alt="mastercard icon" />
+									Pay with credit card
+									<hr />
+								</div>
+							</li>
+							<li>
+								<input type="radio" />
+								<img src={paypalIcon} alt="paypal icon" />
+								Pay with Paypal
+								<hr />
+							</li>
+							<li>
+								<input type="radio" />
+								<img src={applepayIcon} alt="applepay icon" />
+								Pay with Apple pay
+							</li>
+						</ul>
 					</div>
 				</div>
 			</main>
