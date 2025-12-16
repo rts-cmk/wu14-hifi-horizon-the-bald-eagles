@@ -1,57 +1,66 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import '../styles/_shop-page.scss';
 import HeaderComponent from '../components/HeaderComponent.jsx';
 import FooterComponent from '../components/FooterComponent.jsx';
+import FilterSidebar from '../components/FilterSidebar.jsx';
+import ProductGrid from '../components/ProductGrid.jsx';
+import { useProducts } from '../context/ProductContext.jsx';
+import { useLocation } from 'react-router';
 
 export default function ShopPage() {
 
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { products, loading, error, allCategories } = useProducts();
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await fetch('/api/products');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                setProducts(data);
+    const location = useLocation();
 
-                console.log('Fetched products:', data);
-            } catch (error) {
-                console.error('Error fetching products:', error);
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
+    const urlParams = useMemo(() => {
+
+        const params = new URLSearchParams(location.search);
+
+        return {
+            searchTerm: params.get('q') || '',
+            selectedCategory: params.get('category') || ''
         };
-        
-        fetchProducts();
+    }, [location.search]);
 
-    }, []);
+    const filteredProducts = useMemo(() => {
+        let currentProducts = products;
 
+        // Filter by category
+        if (urlParams.selectedCategory) {
+            currentProducts = currentProducts.filter(product =>
+                product.category === urlParams.selectedCategory
+            );
+        }
+        // Filter by search term
+        if (urlParams.searchTerm) {
+            const lowerCaseSearchTerm = urlParams.searchTerm.toLowerCase();
+            currentProducts = currentProducts.filter(product =>
+                
+                product.model.toLowerCase().includes(lowerCaseSearchTerm) ||
+                product.brand.toLowerCase().includes(lowerCaseSearchTerm) ||
+                product.description.toLowerCase().includes(lowerCaseSearchTerm)
+            );
+        }
+
+        return currentProducts;
+    }, [products, urlParams.searchTerm, urlParams.selectedCategory]);
+
+    console.log('Filtered Products:', filteredProducts);
+
+    if (loading) return <p>Loading products..</p>
+    if (error) return <p>Error: {error}</p>
 
     return (
         <div className="shopPage">
             <HeaderComponent />
-            <main>
-                <h1 className='mainTitle'>PRODUCTS</h1>
-                <div className='sortProducts'></div>
-                <section className='productsGrid'>
-                    <ul className='shopPage-product-list'>
-                        <li className='product'>
-                            <div className='compare'></div>
-                            <img src="#" alt="image" />
-                            <h2>Product 1</h2>
-                            <p>price</p>
-                            <button>add to cart</button>
-                            <p>stock</p>
-                        </li>
-                    </ul>
-                </section>
-                
+                <h2 className='shopPage__heading'>PRODUCTS</h2>
+            <main className='shopPage__content-area'>
+                <FilterSidebar
+                    allCategories={allCategories}
+                    selectedCategory={urlParams.selectedCategory}
+                />
+                <ProductGrid products={filteredProducts} />
             </main>
             <FooterComponent />
         </div>
