@@ -58,29 +58,30 @@ export default function CreateAccountPage() {
 
     return (
         < div className="create-account-page" >
-            {/* <HeaderComponent /> */}
-            <h2>Create Account</h2>
+            <HeaderComponent />
+            <h2 className='create-account-page__heading'>CREATE ACCOUNT</h2>
             <form className="create-account-page__account-form" onSubmit={handleSubmit}>
+                <h2>Create New Customer Account:</h2>
 
                 {error && <p className="create-account-page__error-message">{error}</p>}
 
                 <div className="create-account-page__form-group">
                     <p>Full Name:<span>*</span></p>
-                    <input type="text" name="fullName" placeholder="Full Name" onChange={handleChange} required />
+                    <input type="text" name="fullName" placeholder="" onChange={handleChange} required />
                 </div>
 
                 <div className="create-account-page__form-group">
                     <p>Adress:<span>*</span></p>
-                    <input type="text" name="address" placeholder="Street Address" onChange={handleChange} required />
+                    <input type="text" name="address" placeholder="" onChange={handleChange} required />
                 </div>
 
                 <div className="create-account-page__form-group">
-                    <p>Repeat Adress:</p>
-                    <input type="text" name="address2" placeholder="Apartment, suite, etc. (optional)" onChange={handleChange} />
+                    <p>Repeat-Adress:</p>
+                    <input type="text" name="address2" placeholder="" onChange={handleChange} />
                 </div>
 
                 <div className="create-account-page__form-row">
-                    <p>Zip Code:<span>*</span></p>
+                    <p>Zip-Code:<span>*</span></p>
                     <input type="text" name="zipCode" placeholder="" onChange={handleChange} required />
                     <p>City:</p>
                     <input type="text" name="city" placeholder="" onChange={handleChange} required />
@@ -92,7 +93,7 @@ export default function CreateAccountPage() {
                 </div>
 
                 <div className="create-account-page__form-group">
-                    <p>Phone Number:</p>
+                    <p>Phone-Number:</p>
                     <input type="text" name="phone" placeholder="" onChange={handleChange} />
                 </div>
 
@@ -107,18 +108,18 @@ export default function CreateAccountPage() {
                 </div>
 
                 <div className="create-account-page__form-group">
-                    <p>Repeat Password<span>*</span></p>
+                    <p>Repeat-Password<span>*</span></p>
                     <input type="password" name="repeat-password" onChange={handleChange} required />
                 </div>
 
                 <div className="create-account-page__checkboxes">
-                    <input type="checkbox" name="agree-to-data" id="" />
-                    <input type="checkbox" name="accept-marketing" id="" />
+                    <input type="checkbox" name="agree-to-data" id="" /> I agree to the processing of my personal data in accordance with the <a href="/privacy-policy">Privacy Policy</a>.<br />
+                    <input type="checkbox" name="accept-marketing" id="" /> I would like to receive marketing and promotional offers.<br />
                 </div>
 
-                <button type="submit" className="submit-btn">Register</button>
+                <button type="submit" className="submit-btn">Create an Account</button>
             </form >
-            {/* <FooterComponent /> */}
+            <FooterComponent />
         </div >
     );
 }
