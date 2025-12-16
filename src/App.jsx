@@ -1,46 +1,5 @@
-<<<<<<< HEAD
-import React from 'react';
-import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router';
-import '/src/styles/App.scss';
-import FrontPage from './pages/FrontPage';
-import ProductPage from './pages/ProductPage';
-import AboutPage from './pages/AboutPage';
-import ProfilePage from './pages/ProfilePage';
-import ShopPage from './pages/ShopPage';
-import ContactPage from './pages/ContactPage';
-import CartPage from './pages/CartPage';
-import PaymentPage from './pages/PaymentPage';
-import InvoicePage from './pages/InvoicePage';
-
-function App() {
-	return (
-		<>
-			<Router>
-				<Routes>
-					<Route path="/" element={<FrontPage />} />
-					<Route path="/products/:id" element={<ProductPage />} />
-					<Route path="/about" element={<AboutPage />} />
-					<Route path="/profile" element={<ProfilePage />} />
-					<Route path="/shop" element={<ShopPage />} />
-					<Route path="/contact" element={<ContactPage />} />
-					<Route path="/cart" element={<CartPage />} />
-					<Route path="/payment" element={<PaymentPage />} />
-					<Route path="/invoice" element={<InvoicePage />} />
-				</Routes>
-			</Router>
-		</>
-	);
-}
-
-export default App;
-=======
-// App.jsx (Updated)
-
 import React from 'react'
-// Make sure to create this file: src/context/ProductContext.jsx
 import { ProductProvider } from './context/ProductContext.jsx' 
-// NOTE: Your imports are fine, but in standard React Router v6 it would be 'react-router-dom'
 import { BrowserRouter as Router, Routes, Route } from 'react-router' 
 import '/src/styles/App.scss'
 import FrontPage from './pages/FrontPage'
@@ -53,12 +12,9 @@ import CartPage from './pages/CartPage'
 import LoginPage from './pages/LoginPage'
 import CreatePage from './pages/CreateAccountPage'
 
-
 function App() {
 
   return (
-    // STEP 1: Wrap the entire application (everything inside the router) 
-    // with the ProductProvider. This ensures all pages have access to the data.
     <ProductProvider>
       <Router>
         <Routes>
@@ -78,4 +34,3 @@ function App() {
 }
 
 export default App
->>>>>>> ea435282c18681e6bec7a9447c0da07114f9e0e1
