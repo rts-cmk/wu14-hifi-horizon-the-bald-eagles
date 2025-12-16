@@ -8,9 +8,11 @@ export default function ProductDetail({ product }) {
 
     const isAvailable = product['in-stock'];
     const stockStatusText = isAvailable ? 'In Stock' : 'Out of Stock';
-    const imagePath = product.image.startsWith('/') 
-    ? product.image 
-    : `/${product.image}`;
+    const imagePath = product.image.startsWith('/')
+        ? product.image
+        : `/${product.image}`;
+
+    const specificationsExist = product.specifications && Object.keys(product.specifications).length > 0;
 
     return (
         <div className='product-detail'>
@@ -45,13 +47,32 @@ export default function ProductDetail({ product }) {
                             {isAvailable ? 'Add to cart' : 'Out of Stock'}
                         </button>
 
+                        {stockStatusText}
+
                         <span className={`product-detail__stock-status
                             product-detail__stock-status--${isAvailable ? 'true' : 'false'}`}>
-                            {stockStatusText}
                         </span>
+
                     </div>
                 </div>
             </div>
+
+            {specificationsExist && (
+                <div className="product-detail__specifications">
+                    <h2>PRODUCT SPECIFICATION</h2>
+                    <table>
+                        <tbody>
+                            {/* Iterate over the key/value pairs in the specifications object */}
+                            {Object.entries(product.specifications).map(([key, value]) => (
+                                <tr key={key}>
+                                    <th>{key}</th>
+                                    <td>{value}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     )
 }
