@@ -21,10 +21,78 @@
 		gap: 40px;
 	}
 
+	//Info form
+
+	&__info-container {
+		display: flex;
+		flex-direction: column;
+		max-width: 650px;
+		background-color: var.$color_white;
+		box-shadow: 1px 2px 4px rgba($color: #000000, $alpha: 0.25);
+		padding: 23px 60px;
+
+		form {
+			display: flex;
+			flex-direction: column;
+			height: auto;
+			gap: 17px;
+
+			input {
+				border: none;
+				background-color: var.$color_gray_cream;
+				width: 100%;
+				height: 38px;
+				box-shadow: 1px 2px 4px rgba($color: #000000, $alpha: 0.25);
+			}
+		}
+
+		.asterisk {
+			color: var.$color_red;
+		}
+	}
+
+	&__info-zip-city-wrapper {
+		display: flex;
+		gap: 17px;
+
+		label:last-child {
+			flex: 1;
+		}
+	}
+
+	//Home delivery
+
+	&__delivery-container {
+		display: flex;
+		flex-direction: column;
+		max-width: 650px;
+		height: auto;
+		background-color: var.$color_white;
+		box-shadow: 1px 2px 4px rgba($color: #000000, $alpha: 0.25);
+		padding: 44px 46px;
+		gap: 17px;
+	}
+
+	&__input-address {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+
+		h2 {
+			font-size: 16px;
+		}
+
+		li {
+			font-size: 16px;
+			list-style: none;
+		}
+	}
+
 	&__delivery-title {
 		font-size: 26px;
 		font-weight: 700;
 		color: var.$color_dark_gray;
+		margin-bottom: -20px;
 	}
 
 	&__delivery-button-container {
@@ -32,9 +100,123 @@
 		gap: 15px;
 	}
 
+	//Click and collect
+
+	&__input-collect {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+
+		label {
+			display: flex;
+			gap: 10px;
+		}
+
+		h2,
+		h3,
+		p {
+			font-size: 16px;
+		}
+
+		ul {
+			display: flex;
+			flex-direction: column;
+			margin-left: 23px;
+		}
+
+		li {
+			list-style: none;
+			max-width: 80%;
+		}
+	}
+
+	//Post office delivery
+
+	&__input-postoffice {
+		display: flex;
+		flex-direction: column;
+		gap: 17px;
+
+		ul {
+			list-style: none;
+		}
+
+		li {
+			display: flex;
+			flex-direction: column;
+			font-size: 14px;
+		}
+		hr {
+			height: 1px;
+			background: var.$color_light_gray;
+			color: var.$color_light_gray;
+			border: none;
+		}
+
+		label {
+			display: flex;
+			padding: 35px 0;
+			gap: 16px;
+		}
+	}
+	&__input-postoffice-map {
+		border: none;
+		width: auto;
+		height: 450px;
+	}
+
+	//Payment method
+
 	&__payment-method-title {
 		font-size: 26px;
 		font-weight: 700;
 		color: var.$color_dark_gray;
+		margin-bottom: -20px;
+	}
+
+	&__payment-method-container {
+		display: flex;
+		flex-direction: column;
+		max-width: 650px;
+		height: auto;
+		background-color: var.$color_white;
+		box-shadow: 1px 2px 4px rgba($color: #000000, $alpha: 0.25);
+		padding: 44px 46px;
+		gap: 17px;
+
+		ul {
+			list-style: none;
+		}
+
+		li {
+			display: flex;
+			align-items: center;
+			gap: 17px;
+			padding: 29px;
+			font-size: 14px;
+		}
+
+		li:nth-child(1) {
+			border-bottom: 1px solid var.$color_light_gray;
+		}
+		li:nth-child(2) {
+			border-bottom: 1px solid var.$color_light_gray;
+		}
+
+		div {
+			display: flex;
+			gap: 10px;
+		}
+	}
+
+	&__payment-overview-wrapper {
+		display: flex;
+		flex-direction: column;
+		max-width: 450px;
+		height: auto;
+		background-color: var.$color_white;
+		box-shadow: 1px 2px 4px rgba($color: #000000, $alpha: 0.25);
+		padding: 44px 46px;
+		gap: 17px;
 	}
 }

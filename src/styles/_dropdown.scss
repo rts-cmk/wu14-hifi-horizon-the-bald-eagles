@@ -63,6 +63,7 @@
 	min-width: 310px;
 	max-height: 500px;
 	z-index: 20;
+	overflow: scroll;
 
 	&__header {
 		display: flex;

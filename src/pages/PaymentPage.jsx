@@ -9,10 +9,14 @@ import visaIcon from '../assets/pay/visa-dark.svg';
 import masterCardIcon from '../assets/pay/mastercard-dark.svg';
 import paypalIcon from '../assets/pay/paypal.svg';
 import applepayIcon from '../assets/pay/applepay.svg';
+import { useCart } from '../context/CartContext.jsx';
 
 export default function PaymentPage() {
 	// Track which button is active: 'home', 'collect', or 'postoffice'
 	const [activeButton, setActiveButton] = useState(null);
+
+	//Cart items
+	const { cartItems, getCartTotal } = useCart();
 
 	const [formData, setFormData] = useState({
 		fullName: '',
@@ -23,7 +27,7 @@ export default function PaymentPage() {
 		phone: ''
 	});
 
-	const [displayAddress, setDisplayAddress] = useState('');
+	const [displayAddress, setDisplayAddress] = useState([]);
 	const [displayShipStores, setDisplayShipStores] = useState([]);
 	const [displayPostoffice, setDisplayPostoffice] = useState(false);
 
@@ -31,32 +35,36 @@ export default function PaymentPage() {
 		setActiveButton(buttonType);
 
 		if (buttonType === 'home') {
-			const addressString = `${formData.fullName}, ${formData.address}, ${formData.zipCode} ${formData.city}, Email: ${formData.email}, Phone: ${formData.phone}`;
-			setDisplayAddress(addressString);
+			const addressArray = [
+				formData.fullName,
+				formData.address,
+				`${formData.zipCode} ${formData.city}`
+			];
+			setDisplayAddress(addressArray);
 			setDisplayShipStores([]);
 			setDisplayPostoffice(false);
 		} else if (buttonType === 'collect') {
 			const shipToStoreInputs = [
 				{
-					id: 'edinburgh',
-					name: 'Edinburgh - 2 Joppa Rd, Edinburgh, EH15 2EU',
+					id: 'Edinburgh',
+					name: '2 Joppa Rd, Edinburgh, EH15 2EU',
 					hours:
 						'Monday to Friday: 10:00am - 5:30pm, Saturday: 10:00am - 5:30pm, Sunday: Closed'
 				},
 				{
-					id: 'falkirk',
-					name: 'Falkirk - 44 Cow Wynd, Falkirk, Central Region, FK1 1PU',
+					id: 'Falkirk',
+					name: '44 Cow Wynd, Falkirk, Central Region, FK1 1PU',
 					hours:
 						'Monday to Friday: 10:00am - 5:30pm, Saturday - By appointment only, Sunday: Closed'
 				}
 			];
 
 			setDisplayShipStores(shipToStoreInputs);
-			setDisplayAddress('');
+			setDisplayAddress([]);
 			setDisplayPostoffice(false);
 		} else if (buttonType === 'postoffice') {
 			setDisplayPostoffice(true);
-			setDisplayAddress('');
+			setDisplayAddress([]);
 			setDisplayShipStores([]);
 		}
 	}
@@ -78,7 +86,9 @@ export default function PaymentPage() {
 				<div className="payment-page__info-container">
 					<form>
 						<label htmlFor="fullName">
-							Full Name <span className="asterisk">*</span>:
+							<p>
+								Full Name <span className="asterisk">*</span>
+							</p>
 							<input
 								type="text"
 								name="fullName"
@@ -89,32 +99,40 @@ export default function PaymentPage() {
 								required
 							/>
 						</label>
-						<label htmlFor="zipCode">
-							Zip-code <span className="asterisk">*</span>:
-							<input
-								type="number"
-								name="zipCode"
-								id="zipCode"
-								autoComplete="postal-code"
-								value={formData.zipCode}
-								onChange={handleInputChange}
-								required
-							/>
-						</label>
-						<label htmlFor="city">
-							City <span className="asterisk">*</span>:
-							<input
-								type="text"
-								name="city"
-								id="city"
-								autoComplete="address-level2"
-								value={formData.city}
-								onChange={handleInputChange}
-								required
-							/>
-						</label>
+						<div className="payment-page__info-zip-city-wrapper">
+							<label htmlFor="zipCode">
+								<p>
+									Zip-code <span className="asterisk">*</span>
+								</p>
+								<input
+									type="number"
+									name="zipCode"
+									id="zipCode"
+									autoComplete="postal-code"
+									value={formData.zipCode}
+									onChange={handleInputChange}
+									required
+								/>
+							</label>
+							<label htmlFor="city">
+								<p>
+									City <span className="asterisk">*</span>
+								</p>
+								<input
+									type="text"
+									name="city"
+									id="city"
+									autoComplete="city"
+									value={formData.city}
+									onChange={handleInputChange}
+									required
+								/>
+							</label>
+						</div>
 						<label htmlFor="address">
-							Address <span className="asterisk">*</span>:
+							<p>
+								Address <span className="asterisk">*</span>
+							</p>
 							<input
 								type="text"
 								name="address"
@@ -126,7 +144,9 @@ export default function PaymentPage() {
 							/>
 						</label>
 						<label htmlFor="email">
-							E-mail <span className="asterisk">*</span>:
+							<p>
+								E-mail <span className="asterisk">*</span>
+							</p>
 							<input
 								type="email"
 								name="email"
@@ -138,7 +158,9 @@ export default function PaymentPage() {
 							/>
 						</label>
 						<label htmlFor="phone">
-							Phone number <span className="asterisk">*</span>:
+							<p>
+								Phone number <span className="asterisk">*</span>
+							</p>
 							<input
 								type="tel"
 								name="phone"
@@ -151,11 +173,10 @@ export default function PaymentPage() {
 						</label>
 					</form>
 				</div>
-
+				<h2 className="payment-page__delivery-title">
+					Select your preferred delivery method
+				</h2>
 				<div className="payment-page__delivery-container">
-					<h2 className="payment-page__delivery-title">
-						Select your preferred delivery method
-					</h2>
 					<div className="payment-page__delivery-button-container">
 						<Button
 							label="Home delivery"
@@ -184,35 +205,48 @@ export default function PaymentPage() {
 					</div>
 
 					{/* Home delivery */}
-					<div className="input-address">
-						{displayAddress && <h2>Your order will be shipped to</h2>}
-						{displayAddress}
+					<div className="payment-page__input-address">
+						{displayAddress.length > 0 && (
+							<h2>Your order will be shipped to</h2>
+						)}
+						<ul>
+							{displayAddress.map((address, index) => (
+								<li key={index}>{address}</li>
+							))}
+						</ul>
 					</div>
 
 					{/* Click and collect */}
-					<div className="input-collect">
+					<div className="payment-page__input-collect">
 						{displayShipStores.length > 0 && (
 							<h2>Your order will be shipped to</h2>
 						)}
 						{displayShipStores.length > 0 && (
-							<ul>
+							<>
 								{displayShipStores.map((store) => (
-									<li key={store.id}>
+									<div
+										key={store.id}
+										className="payment-page__input-collect-wrapper">
 										<label>
 											<input type="radio" name="store" value={store.id} />
-											<div>
-												<strong>{store.name}</strong>
-												<p>{store.hours}</p>
-											</div>
+											<h3>{store.id}</h3>
 										</label>
-									</li>
+										<ul>
+											<li>
+												<p>{store.name}</p>
+											</li>
+											<li>
+												<p>{store.hours}</p>
+											</li>
+										</ul>
+									</div>
 								))}
-							</ul>
+							</>
 						)}
 					</div>
 
 					{/* Postoffice */}
-					<div className="input-postoffice">
+					<div className="payment-page__input-postoffice">
 						{displayPostoffice && (
 							<h2>
 								Your order will be shipped with a FedEx selected postoffice
@@ -222,9 +256,7 @@ export default function PaymentPage() {
 						{displayPostoffice && (
 							<iframe
 								src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d39741.57337230748!2d-0.1591507!3d51.4976506!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487603f2e45a7c63%3A0x5c44f6cd164c4832!2sFedEx!5e0!3m2!1sen!2sdk!4v1765800967279!5m2!1sen!2sdk"
-								width="600"
-								height="450"
-								style={{ border: 0 }}
+								className="payment-page__input-postoffice-map"
 								allowFullScreen=""
 								loading="lazy"
 								referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -264,16 +296,15 @@ export default function PaymentPage() {
 											</p>
 										</div>
 									</label>
-									<hr />
 								</li>
 							</ul>
 						)}
 					</div>
 				</div>
+				<h2 className="payment-page__payment-method-title">
+					Choose payment method
+				</h2>
 				<div className="payment-page__payment-method-container">
-					<h2 className="payment-page__payment-method-title">
-						Choose payment method
-					</h2>
 					<ul>
 						<li>
 							<input type="radio" />
@@ -281,15 +312,13 @@ export default function PaymentPage() {
 								<img src={stripeIcon} alt="stripe icon" />
 								<img src={visaIcon} alt="visa icon" />
 								<img src={masterCardIcon} alt="mastercard icon" />
-								Pay with credit card
-								<hr />
 							</div>
+							Pay with credit card
 						</li>
 						<li>
 							<input type="radio" />
 							<img src={paypalIcon} alt="paypal icon" />
 							Pay with Paypal
-							<hr />
 						</li>
 						<li>
 							<input type="radio" />
@@ -298,7 +327,62 @@ export default function PaymentPage() {
 						</li>
 					</ul>
 				</div>
-				<div className="payment-page__payment-overview-container"></div>
+				<div className="payment-page__payment-overview-container">
+					<div className="payment-page__payment-overview-wrapper">
+						<h2 className="payment-page__payment-overview-title">
+							Payment overview
+						</h2>
+
+						{cartItems.map((item) => (
+							<ul
+								key={item.id}
+								className="payment-page__payment-overview-item">
+								<li className="payment-page__payment-overview-item-details">
+									<p className="payment-page__payment-overview-item-model">
+										{item.model}
+									</p>
+									<p className="payment-page__payment-overview-item-quantity">
+										{item.quantity}
+									</p>
+								</li>
+								<p className="payment-page__payment-overview-item-price">
+									£ {(item.price * item.quantity).toLocaleString()}
+								</p>
+							</ul>
+						))}
+						<div className="payment-page__payment-total">
+							<p>Price </p>
+							<p>£{getCartTotal().toLocaleString()}</p>
+						</div>
+						<hr />
+						<div className="payment-page__payment-total-vat">
+							<p>Delivery price </p>
+							<p>£4.00</p>
+							<p>VAT</p>
+							<p>£{((getCartTotal() / 100) * 25).toLocaleString()}</p>
+							<p>Total price £{(getCartTotal() + 4).toLocaleString()}</p>
+						</div>
+					</div>
+
+					<ul>
+						<li>
+							<label htmlFor="newletter">
+								<input type="radio" name="newsletter" id="" />
+								<p>Subscribe to newsletter</p>
+							</label>
+						</li>
+						<li>
+							<label htmlFor="terms">
+								<input type="radio" name="terms" id="" />
+								<p>
+									I accept the terms of trade{' '}
+									<strong>(read in new window)</strong>
+								</p>
+							</label>
+						</li>
+					</ul>
+					<Button label="Complete order" variant="primary" size="medium" />
+				</div>
 			</main>
 			<FooterComponent />
 		</div>
