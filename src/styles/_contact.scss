@@ -1,0 +1,86 @@
+.contact-page {
+    background-color: #f6f6f6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 140px 0 0 0;
+    font-family: 'Open Sans', sans-serif;
+
+    h1 {
+        color: #000000;
+        font-size: 2.5em;
+        font-weight: 500;
+        margin-bottom: 3rem;
+        padding: 0 0 0 45px;
+    }
+
+    .contact-card {
+        background: white;
+        width: 95%;
+        max-width: 1800px;
+        padding: 40px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        border-radius: 4px;
+        margin: 0 45px;
+
+        .form-group {
+            margin-bottom: 20px;
+            label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 500;
+                span { color: red; }
+            }
+            input, textarea {
+                width: 60%;
+                background-color: #e8e8e8; 
+                border: 1px solid #ccc;
+                padding: 12px;
+                font-size: 1rem;
+            }
+            textarea { height: 150px; }
+        }
+
+        .form-group__message {
+            label{
+                span { color: red; }
+            }
+            
+            input, textarea {
+                width: 100%;
+                background-color: #e8e8e8; 
+                border: 1px solid #ccc;
+                padding: 12px;
+                font-size: 1rem;
+            }
+            textarea {
+                height: 200px; // Gives it that big box look from your design
+                resize: vertical; // Allows users to stretch it if they want
+                background-color: #e8e8e8;
+                border: 1px solid #ccc;
+                padding: 12px;
+            }
+
+        }
+
+        .submit-btn {
+            background-color: #f47920; 
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            float: right;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            &:hover { background-color: #d66518; }
+        }
+    }
+
+    .footer-note {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+        font-weight: 500;
+        .highlight { color: #f47920; cursor: pointer; }
+    }
+}
