@@ -33,153 +33,160 @@ export default function HeaderComponent() {
 		};
 	};
 
-		// Function to handle category click from the dropdown
-		const handleCategoryClick = () => {
-			setLocalSearchTerm('');
+	// Function to handle category click from the dropdown
+	const handleCategoryClick = () => {
+		setLocalSearchTerm('');
+	}
+
+	// Helper to clean up category slugs for display
+	const formatCategoryForDisplay = (slug) => {
+		if (!slug) return 'ALL PRODUCTS';
+
+		const translations = {
+			'cdafspillere': 'CD PLAYERS',
+			'dvdafspillere': 'DVD PLAYERS',
+			'forforstaerkere': 'PREAMPS',
+			'hoejtalere': 'SPEAKERS',
+			'pladespillere': 'TURNTABLES',
+			'intforstaerker': 'INTEGRATED AMPLIFIERS',
+			'effektforstaerkere': 'POWER AMPLIFIERS',
+			'roerforstaerkere': 'TUBE AMPLIFIERS'
+		};
+
+		if (translations[slug]) {
+			return translations[slug];
 		}
 
-		// Helper to clean up category slugs for display
-		const formatCategoryForDisplay = (slug) => {
-			if (!slug) return 'ALL PRODUCTS';
-
-			const translations = {
-				'cdafspillere': 'CD PLAYERS',
-				'dvdafspillere': 'DVD PLAYERS',
-				'forforstaerkere': 'PREAMPS',
-				'hoejtalere': 'SPEAKERS',
-				'pladespillere': 'TURNTABLES',
-				'intforstaerker': 'INTEGRATED AMPLIFIERS',
-				'effektforstaerkere': 'POWER AMPLIFIERS',
-				'roerforstaerkere': 'TUBE AMPLIFIERS'
-			};
-
-			if (translations[slug]) {
-				return translations[slug];
-			}
-
-			return slug.replace(/([A-Z])/g, ' $1').toUpperCase();
-		}
+		return slug.replace(/([A-Z])/g, ' $1').toUpperCase();
+	}
 
 
-		return (
-			<header className="header">
-				<nav className="nav">
-					<ul className="nav__nav-list">
-						<li className="nav__nav-item">
-							<Link to="/">
-								<img src={logo} alt="hifi logo" />
-							</Link>
-						</li>
-						<li className="nav__nav-item">
-							<Dropdown>
-								<Dropdown.Button>SHOP</Dropdown.Button>
-								<Dropdown.Content>
-									<Dropdown.List>
-										<h2 className="dropdown-content-heading">
-											Browse Categories
-										</h2>
+	return (
+		<header className="header">
+			<nav className="nav">
+				<ul className="nav__nav-list">
+					<li className="nav__nav-item">
+						<Link to="/">
+							<img src={logo} alt="hifi logo" />
+						</Link>
+					</li>
+					<li className="nav__nav-item">
+						<Dropdown>
+							<Dropdown.Button>SHOP</Dropdown.Button>
+							<Dropdown.Content>
+								<Dropdown.List>
+									<h2 className="dropdown-content-heading">
+										Browse Categories
+									</h2>
 
-										{/* Link for All Products */}
+									{/* Link for All Products */}
+									<Dropdown.Item
+										to="/shop"
+										onClick={handleCategoryClick}
+									>
+										{formatCategoryForDisplay('')}
+									</Dropdown.Item>
+
+									{/* Dynamically generated categories from normalized data */}
+									{allCategories && allCategories.map(category => (
 										<Dropdown.Item
-											to="/shop"
-											onClick={handleCategoryClick}
+											key={category}
+											to={`/shop?category=${category}`}
+											onClick={() => handleCategoryClick(category)}
 										>
-											{formatCategoryForDisplay('')}
+											{formatCategoryForDisplay(category)}
 										</Dropdown.Item>
+									))}
 
-										{/* Dynamically generated categories from normalized data */}
-										{allCategories && allCategories.map(category => (
-											<Dropdown.Item
-												key={category}
-												to={`/shop?category=${category}`}
-												onClick={() => handleCategoryClick(category)}
-											>
-												{formatCategoryForDisplay(category)}
-											</Dropdown.Item>
-										))}
-
-									</Dropdown.List>
-								</Dropdown.Content>
-							</Dropdown>
-						</li>
-						<li className="nav__nav-item">
-							<NavLink
-								to="/about"
-								style={({ isActive }) => {
-									return {
-										fontWeight: isActive ? 'bold' : ''
-									};
-								}}>
-								ABOUT US
-							</NavLink>
-						</li>
-						<li className="nav__nav-item">
-							<NavLink
-								to="/contact"
-								style={({ isActive }) => {
-									return {
-										fontWeight: isActive ? 'bold' : ''
-									};
-								}}>
-								CONTACT US
-							</NavLink>
-						</li>
-					</ul>
-				</nav>
-				<div className="side-nav">
-					<form className="side-nav__form" onSubmit={handleSearchSubmit}>
-						<input
-							type="search"
-							name="search"
-							className="side-nav__site-search"
-							placeholder="Search product..."
-							value={localSearchTerm}
-							onChange={handleSearchChange}
+								</Dropdown.List>
+							</Dropdown.Content>
+						</Dropdown>
+					</li>
+					<li className="nav__nav-item">
+						<NavLink
+							to="/about"
+							style={({ isActive }) => {
+								return {
+									fontWeight: isActive ? 'bold' : ''
+								};
+							}}>
+							ABOUT US
+						</NavLink>
+					</li>
+					<li className="nav__nav-item">
+						<NavLink
+							to="/contact"
+							style={({ isActive }) => {
+								return {
+									fontWeight: isActive ? 'bold' : ''
+								};
+							}}>
+							CONTACT US
+						</NavLink>
+					</li>
+				</ul>
+			</nav>
+			<div className="side-nav">
+				<form className="side-nav__form" onSubmit={handleSearchSubmit}>
+					<input
+						type="search"
+						name="search"
+						className="side-nav__site-search"
+						placeholder="Search product..."
+						value={localSearchTerm}
+						onChange={handleSearchChange}
+					/>
+					<button className="side-nav__search-button" type="submit">
+						<img
+							src={searchIcon}
+							alt="search icon"
+							className="side-nav__search-button-icon"
 						/>
-						<button className="side-nav__search-button" type="submit">
-							<img
-								src={searchIcon}
-								alt="search icon"
-								className="side-nav__search-button-icon"
-							/>
-						</button>
-					</form>
-					<ul className="side-nav__ul">
-						<li className="side-nav__nav-item">
-							{user ? (
-								<span>Welcome, {user.fullName}</span>
-							) : (
+					</button>
+				</form>
+				<ul className="side-nav__ul">
+					<li className="side-nav__nav-item">
+						{user ? (
 							<Link to="/profile">
+								<span>Welcome, {user.fullName}</span>
 								<img
 									src={profile}
 									alt=""
 									className="side-nav__nav-item-profile-icon"
 								/>
 							</Link>
-							)}
-						</li>
-						<li className="side-nav__nav-item">
-							<Dropdown>
-								<Dropdown.Button>
-									<img
-										src={cart}
-										alt="cart"
-										className="side-nav__nav-item-cart-icon"
-									/>
-								</Dropdown.Button>
-								<Dropdown.Content>
-									<h2>Cart</h2>
-									<p>Sub total:</p>
-									<Link to="/cart/">
-										{' '}
-										<input type="button" value="Go to cart" />
-									</Link>
-									<input type="button" value="Go to payment" />
-								</Dropdown.Content>
-							</Dropdown>
-						</li>
-					</ul>
-				</div>
-			</header>
-		);
-	}
+						) : (
+							<Link to="/login">
+								<img
+									src={profile}
+									alt=""
+									className="side-nav__nav-item-profile-icon"
+								/>
+							</Link>
+						)}
+					</li>
+					<li className="side-nav__nav-item">
+						<Dropdown>
+							<Dropdown.Button>
+								<img
+									src={cart}
+									alt="cart"
+									className="side-nav__nav-item-cart-icon"
+								/>
+							</Dropdown.Button>
+							<Dropdown.Content>
+								<h2>Cart</h2>
+								<p>Sub total:</p>
+								<Link to="/cart/">
+									{' '}
+									<input type="button" value="Go to cart" />
+								</Link>
+								<input type="button" value="Go to payment" />
+							</Dropdown.Content>
+						</Dropdown>
+					</li>
+				</ul>
+			</div>
+		</header>
+	);
+}

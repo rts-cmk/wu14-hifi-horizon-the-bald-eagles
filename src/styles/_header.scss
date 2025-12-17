@@ -73,4 +73,12 @@
 		width: 29.42px;
 		height: 26px;
 	}
+
+	&__nav-item span {
+		text-transform: uppercase;
+		margin-right: 30px;
+		padding: 10px 0 10px 10px;
+		color: var.$color_white;
+		font-size: 14px;
+	}
 }

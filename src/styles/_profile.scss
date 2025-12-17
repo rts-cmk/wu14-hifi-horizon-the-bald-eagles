@@ -1,0 +1,143 @@
+.profile-wrapper {
+    background-color: #f0f0f0;
+    min-height: calc(100vh - 200px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 100px 20px 20px 20px;
+    margin-top: 25px;
+    margin-bottom: -100px;
+    font-family: "Open Sans", sans-serif;
+}
+
+.profile-card {
+    background: white;
+    width: 100%;
+    max-width: 1800px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.profile-tabs {
+    display: flex;
+    background-color: #e0e0e0;
+
+    .tab-btn {
+        flex: 1;
+        padding: 1rem;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.3s;
+        color: #333;
+
+        &.active {
+            background-color: #4a5568;
+            color: white;
+        }
+
+        &:hover:not(.active) {
+            background-color: #d1d5db;
+        }
+    }
+}
+
+.tab-content {
+    padding: 3rem;
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        color: #000;
+    }
+}
+
+// Info Row styling for the mockup look
+.info-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 3.5rem 0;
+    border-top: 1px solid #eee; // Border between items
+
+    &__left {
+        width: 80px;
+        img {
+            width: 35px;
+            opacity: 0.8;
+        }
+    }
+
+    &__middle {
+        flex: 1;
+        .label {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        span {
+            color: #444;
+        }
+    }
+
+    &__right {
+        .edit-icon-btn {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            &:hover {
+                background: #f5f5f5;
+            }
+            img {
+                width: 18px;
+            }
+        }
+    }
+}
+
+.save-btn,
+.cancel-btn {
+    background-color: #f47920;
+    font-size: 1em;
+    width: 200px;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    margin: 30px 0 15px 30px;
+    border-radius: 3px;
+
+    &:hover {
+        background-color: #d96c1c;
+    }
+}
+
+.address-display {
+    display: flex;           
+    flex-direction: column;  
+    gap: 4px;                
+    margin-top: 5px;         
+
+    span {
+        display: block;      
+        color: #555;         
+        font-size: 0.95em;
+        line-height: 1.4;
+    }
+}
+
+
+.edit-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    input {
+        width: 100%;
+        max-width: 400px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+}
