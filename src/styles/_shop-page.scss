@@ -18,14 +18,14 @@
         font-size: 2.5em;
         font-weight: 500;
         letter-spacing: 0.1em;
-        margin: 40px 0 0 20px;
+        margin: 40px 0 0 45px;
         padding-bottom: 10px;
         color: #333;
     }
 
     &__content-area {
         display: grid;
-        grid-template-columns: 250px 1fr; 
+        grid-template-columns: 350px 1fr; 
         gap: 60px; 
     }
 }
@@ -37,7 +37,7 @@
     padding-top: 5px;
     padding-left: 10px;
     margin-top: 50px;
-    margin-left: 20px;
+    margin-left: 45px;
     background:#E8E8E8;
 
     .filter-block {
@@ -55,6 +55,7 @@
         margin-bottom: 10px;
         text-transform: uppercase;
         letter-spacing: 0.05em;
+        border-bottom: 1px solid #ccc;
     }
 
     .filter-sidebar__list {
