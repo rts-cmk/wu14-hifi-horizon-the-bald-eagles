@@ -23,8 +23,104 @@
 		flex-direction: column;
 		align-items: flex-end;
 		width: 170px;
-		gap: 40px;
 		position: absolute;
 		right: 20px;
+	}
+
+	&__payment-total {
+		display: flex;
+		padding: 15px 0;
+		justify-content: space-between;
+		font-size: 14px;
+		gap: 10px;
+
+		p:last-child {
+			font-weight: 600;
+			color: var.$color_orange;
+		}
+	}
+}
+
+.cart-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	background-color: var.$color_white;
+	padding: 20px;
+	margin-bottom: 20px;
+	position: relative;
+	box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+
+	&__remove {
+		align-self: flex-start;
+		position: absolute;
+		right: 20px;
+		background: none;
+		border: none;
+		font-size: 24px;
+		cursor: pointer;
+		color: var.$color_dark_gray;
+	}
+
+	&__image {
+		width: 100px;
+		height: 100px;
+		object-fit: contain;
+	}
+
+	&__details {
+		min-width: 200px;
+
+		h2 {
+			font-size: 14px;
+			font-weight: 400;
+		}
+	}
+
+	&__stock {
+		display: flex;
+		align-items: center;
+		font-size: 12px;
+		gap: 8px;
+		color: var.$color_black;
+	}
+
+	&__stock-indicator {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background-color: var.$color_green;
+	}
+
+	&__quantity {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		button {
+			width: 25px;
+			height: 25px;
+			font-size: 25px;
+			border: none;
+			background: var.$color_white;
+			cursor: pointer;
+		}
+		span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 26px;
+			height: 26px;
+			font-size: 14px;
+			background-color: var.$color_gray_cream;
+			border-radius: 3px;
+		}
+	}
+
+	&__price {
+		font-size: 16px;
+		font-weight: 400;
+		min-width: 120px;
 	}
 }

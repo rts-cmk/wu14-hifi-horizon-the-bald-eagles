@@ -3,6 +3,19 @@
 
 .dropdown {
 	position: relative;
+
+	// Add specific positioning for different dropdown types
+	&--shop .dropdown-content {
+		left: 0;
+		right: auto;
+	}
+
+	&--cart .dropdown-content {
+		right: 0;
+		left: auto;
+		top: 3.25rem;
+		border-radius: 3px;
+	}
 }
 
 .dropdown-button {
@@ -43,4 +56,134 @@
 
 #dropdown-item:hover {
 	text-decoration: underline;
+}
+
+.dropdown-cart {
+	padding: 20px;
+	min-width: 310px;
+	max-height: 500px;
+	z-index: 20;
+
+	&__header {
+		display: flex;
+		align-items: flex-end;
+		gap: 10px;
+	}
+
+	&__header h2 {
+		font-size: 24px;
+		font-weight: 600;
+		color: var.$color_dark_gray;
+	}
+
+	&__header p {
+		font-size: 14px;
+	}
+
+	&__item {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		padding: 15px 0;
+		border-bottom: 1px solid var.$color_gray_cream;
+	}
+	&__item-products {
+		display: flex;
+		min-width: 310px;
+		gap: 10px;
+	}
+
+	&__item-remove {
+		background: none;
+		border: none;
+		font-size: 20px;
+		cursor: pointer;
+		color: var.$color_black;
+		align-self: flex-start;
+	}
+
+	&__item-image {
+		width: 60px;
+		height: 60px;
+		object-fit: contain;
+	}
+
+	&__item-details {
+		flex: 1;
+	}
+
+	&__item-details-title {
+		font-size: 12px;
+		font-weight: 700;
+		color: var.$color_black;
+	}
+
+	&__item-details-stock-container {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+	}
+
+	&__item-stock {
+		font-size: 10px;
+	}
+
+	&__item-stock-icon {
+		height: 7px;
+		width: 7px;
+		background-color: var.$color_green;
+		border-radius: 50%;
+	}
+
+	&__item-quantity-price {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__item-quantity {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		button {
+			width: 25px;
+			height: 25px;
+			font-size: 25px;
+			border: none;
+			background: var.$color_white;
+			cursor: pointer;
+		}
+		span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 26px;
+			height: 26px;
+			font-size: 14px;
+			background-color: var.$color_gray_cream;
+			border-radius: 3px;
+		}
+	}
+
+	&__item-price {
+		font-size: 12px;
+		font-weight: 400;
+		color: var.$color_black;
+	}
+
+	&__total {
+		display: flex;
+		padding: 15px 0;
+		justify-content: space-between;
+		font-size: 14px;
+
+		p:last-child {
+			color: var.$color_orange;
+		}
+	}
+}
+
+.button-container {
+	display: flex;
+	gap: 10px;
 }

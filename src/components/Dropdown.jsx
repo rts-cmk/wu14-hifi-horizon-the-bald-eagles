@@ -15,33 +15,32 @@ const DropdownContext = createContext({
 });
 
 //dropdown component
-export default function Dropdown({ children, ...props }) {
+export default function Dropdown({ children, type, ...props }) {
 	const [open, setOpen] = useState(false);
 	const dropdownRef = useRef(null);
 
-	//click listeners for closing dropdown
 	useEffect(() => {
-		//close dropdown
-		function close(event) {
-			if (!dropdownRef.current.contains(event.target)) {
+		function handleClickOutside(event) {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
 				setOpen(false);
 			}
 		}
 
-		//add / remove event listener
 		if (open) {
-			window.addEventListener('click', close);
+			document.addEventListener('mousedown', handleClickOutside);
 		}
 
-		//cleanup
-		return function removeListener() {
-			window.removeEventListener('click', close);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, [open]); // only runs if the open state changes
+	}, [open]);
 
 	return (
 		<DropdownContext.Provider value={{ open, setOpen }}>
-			<div ref={dropdownRef} className="dropdown">
+			<div
+				ref={dropdownRef}
+				className={`dropdown ${type ? `dropdown--${type}` : ''}`}
+				{...props}>
 				{children}
 			</div>
 		</DropdownContext.Provider>

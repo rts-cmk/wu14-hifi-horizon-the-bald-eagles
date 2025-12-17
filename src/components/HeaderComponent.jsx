@@ -7,9 +7,17 @@ import profile from '../assets/icons/profile.svg';
 import searchIcon from '../assets/icons/search-icon.svg';
 import Dropdown from './Dropdown';
 import { useProducts } from '../context/ProductContext.jsx';
+import { useCart } from '../context/CartContext.jsx';
+import Button from './Button.jsx';
 
-// Component now accepts props for search and category filtering
 export default function HeaderComponent() {
+	const {
+		cartItems,
+		getCartTotal,
+		getCartCount,
+		updateQuantity,
+		removeFromCart
+	} = useCart();
 	const location = useLocation();
 	const isCartPage =
 		location.pathname === '/cart/' || location.pathname.startsWith('/cart/');
@@ -30,7 +38,7 @@ export default function HeaderComponent() {
 					</li>
 					<li className="nav__nav-item">
 						{/* <Link to="/shop">SHOP</Link> */}
-						<Dropdown>
+						<Dropdown type="shop">
 							<Dropdown.Button>SHOP</Dropdown.Button>
 							<Dropdown.Content>
 								<Dropdown.List>
@@ -84,32 +92,118 @@ export default function HeaderComponent() {
 						placeholder="Search product..."
 					/>
 					<button type="submit" className="side-nav__search-button">
-						<img src={searchIcon} alt="search icon" className="side-nav__search-button-icon" />
+						<img
+							src={searchIcon}
+							alt="search icon"
+							className="side-nav__search-button-icon"
+						/>
 					</button>
 				</form>
 
-				<ul className="side-nav__list"> 
+				<ul className="side-nav__list">
 					<li className="side-nav__nav-item">
-						<Dropdown>
+						<Dropdown type="cart">
 							<Dropdown.Button>
 								<div className="side-nav__nav-item-cart-container">
-									<img src={cart} alt="cart" className="side-nav__nav-item-cart-icon" />
+									<img
+										src={cart}
+										alt="cart"
+										className="side-nav__nav-item-cart-icon"
+									/>
 									<span
 										className="side-nav__nav-item-cart-underline"
-										style={{ display: (isCartPage || isPaymentPage || isInvoicePage) ? 'block' : 'none' }}
-									></span>
-									<span className="side-nav__nav-item-cart-counter">0</span>
+										style={{
+											display:
+												isCartPage || isPaymentPage || isInvoicePage
+													? 'block'
+													: 'none'
+										}}></span>
+									<span className="side-nav__nav-item-cart-counter">
+										{getCartCount()}
+									</span>
 								</div>
 							</Dropdown.Button>
 							<Dropdown.Content>
-								<h2>Cart</h2>
-								<p>Sub total: $0.00</p>
-								<Link to="/cart/" className="dropdown-link-button">
-									Go to cart
-								</Link>
-								<Link to="/payment/" className="dropdown-link-button">
-									Go to payment
-								</Link>
+								<div className="dropdown-cart">
+									<div className="dropdown-cart__header">
+										<h2>Cart</h2>
+										<p>({cartItems.length} items)</p>
+									</div>
+									{cartItems.length === 0 ? (
+										<p>Your cart is empty</p>
+									) : (
+										<>
+											{cartItems.map((item) => (
+												<div key={item.id} className="dropdown-cart__item">
+													<div className="dropdown-cart__item-products">
+														<button
+															onClick={() => removeFromCart(item.id)}
+															className="dropdown-cart__item-remove">
+															×
+														</button>
+														<img
+															src={item.image}
+															alt={item.model}
+															className="dropdown-cart__item-image"
+														/>
+														<div className="dropdown-cart__item-details">
+															<p className="dropdown-cart__item-details-title">
+																{item.model}
+															</p>
+															<div className="dropdown-cart__item-details-stock-container">
+																<p className="dropdown-cart__item-stock">
+																	In stock
+																</p>
+																<span className="dropdown-cart__item-stock-icon"></span>
+															</div>
+														</div>
+													</div>
+
+													<div className="dropdown-cart__item-quantity-price">
+														<div className="dropdown-cart__item-quantity">
+															<button
+																onClick={() =>
+																	updateQuantity(item.id, item.quantity - 1)
+																}>
+																−
+															</button>
+															<span>{item.quantity}</span>
+															<button
+																onClick={() =>
+																	updateQuantity(item.id, item.quantity + 1)
+																}>
+																+
+															</button>
+														</div>
+														<p className="dropdown-cart__item-price">
+															£ {item.price.toLocaleString()}
+														</p>
+													</div>
+												</div>
+											))}
+											<div className="dropdown-cart__total">
+												<p>Sub total: </p>
+												<p>£ {getCartTotal().toLocaleString()}</p>
+											</div>
+										</>
+									)}
+									<div className="button-container">
+										<Link to="/cart/">
+											<Button
+												label="Go to cart"
+												variant="primary"
+												size="medium"
+											/>
+										</Link>
+										<Link to="/payment/">
+											<Button
+												label="Go to payment"
+												variant="primary"
+												size="medium"
+											/>
+										</Link>
+									</div>
+								</div>
 							</Dropdown.Content>
 						</Dropdown>
 					</li>
@@ -118,4 +212,3 @@ export default function HeaderComponent() {
 		</header>
 	);
 }
-

@@ -31,4 +31,10 @@
 		display: flex;
 		gap: 15px;
 	}
+
+	&__payment-method-title {
+		font-size: 26px;
+		font-weight: 700;
+		color: var.$color_dark_gray;
+	}
 }
