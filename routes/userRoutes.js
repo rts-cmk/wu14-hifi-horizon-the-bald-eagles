@@ -37,4 +37,24 @@ router.post('/login', async (req, res) => {
 
     });
 
+router.put('/update/:id', async (req, res) => {
+    console.log('--- USER UPDATE ROUTE HIT---');
+    try {
+        const { id } = req.params;
+        const updatedData = req.body;
+
+        const updatedUser = await User.findByIdAndUpdate(id, updatedData, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'Customer was not found'});
+        }
+
+        const { password: _, ...userData } = updatedUser._doc;
+        res.json({ message: 'Profile has been updated!', user: userData });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error when trying to update profile'});
+
+    }
+});
+
 export default router;
