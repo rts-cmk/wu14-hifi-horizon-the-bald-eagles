@@ -17,4 +17,24 @@ router.post('/register', async (req, res) => {
     }
 });
 
+router.post('/login', async (req, res) => {
+    console.log('--- USER LOGIN ROUTE HIT ---');
+    try {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email: email.toLowerCase() });
+
+        if (!user || user.password !== password) {
+            return res.status(401).json({ message: 'The mail or pasword do not match, try again'});
+        }
+
+        const { password: _, ...userData } = user._doc;
+        res.status(200).json({ message: 'Login was successful!', user: userData});
+    } catch (err) {
+        res.status(500).json({ message: 'Server error when trying to login'});
+
+        }
+
+    });
+
 export default router;

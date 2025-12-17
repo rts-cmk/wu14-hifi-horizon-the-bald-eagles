@@ -62,7 +62,6 @@ export default function ProductDetail({ product }) {
                     <h2>PRODUCT SPECIFICATION</h2>
                     <table>
                         <tbody>
-                            {/* Iterate over the key/value pairs in the specifications object */}
                             {Object.entries(product.specifications).map(([key, value]) => (
                                 <tr key={key}>
                                     <th>{key}</th>

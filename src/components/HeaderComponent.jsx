@@ -14,6 +14,8 @@ export default function HeaderComponent() {
 	const { allCategories } = useProducts();
 	const navigate = useNavigate();
 
+	const user = JSON.parse(localStorage.getItem('user'));
+
 	const [localSearchTerm, setLocalSearchTerm] = useState('');
 
 	// Handle typing in the search bar (updates filter state in ShopPage)
@@ -144,6 +146,9 @@ export default function HeaderComponent() {
 					</form>
 					<ul className="side-nav__ul">
 						<li className="side-nav__nav-item">
+							{user ? (
+								<span>Welcome, {user.fullName}</span>
+							) : (
 							<Link to="/profile">
 								<img
 									src={profile}
@@ -151,6 +156,7 @@ export default function HeaderComponent() {
 									className="side-nav__nav-item-profile-icon"
 								/>
 							</Link>
+							)}
 						</li>
 						<li className="side-nav__nav-item">
 							<Dropdown>

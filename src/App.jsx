@@ -15,6 +15,7 @@ import ContactPage from './pages/ContactPage'
 import CartPage from './pages/CartPage'
 import LoginPage from './pages/LoginPage'
 import CreatePage from './pages/CreateAccountPage'
+import FAQPage from './pages/FAQPage'
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/faq" element={<FAQPage />} />
         </Routes>
       </Router>
     </ProductProvider>
