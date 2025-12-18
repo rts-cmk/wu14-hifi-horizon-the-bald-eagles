@@ -30,7 +30,7 @@ export default function FrontPage() {
 								const details = productsInBrand[productKey];
 
 								flattenedProducts.push({
-									id: productKey.replace(/\s+/g, '-').toLowerCase(),
+									id: `${category}-${brandName}-${productKey}`.replace(/\s+/g, '-').toLowerCase(),
 									brand: brandName,
 									category: category,
 									name: productKey,
@@ -99,7 +99,6 @@ export default function FrontPage() {
 									<p className="price">£ {product.price},-</p>
 									<Link
 										to={`/product/${product.id}`}
-										key={product.id}
 										className="view-btn">Read more</Link>
 								</div>
 							</div>
