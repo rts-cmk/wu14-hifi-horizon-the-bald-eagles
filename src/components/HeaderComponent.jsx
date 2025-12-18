@@ -147,14 +147,25 @@ export default function HeaderComponent() {
 				<ul className="side-nav__ul">
 					<li className="side-nav__nav-item">
 						{user ? (
-							<Link to="/profile">
+							<Dropdown>
 								<span>Welcome, {user.fullName}</span>
-								<img
-									src={profile}
-									alt=""
-									className="side-nav__nav-item-profile-icon"
-								/>
-							</Link>
+								<Dropdown.Button>
+									<img
+										src={profile}
+										alt=""
+										className="side-nav__nav-item-profile-icon"
+									/>
+								</Dropdown.Button>
+								<Dropdown.Content>
+									<Dropdown.List>
+										<Dropdown.Item to="/profile">Profile</Dropdown.Item>
+										<Dropdown.Item to="/login" onClick={() => {
+											localStorage.removeItem('user');
+											window.location.href = '/';
+										}}>Logout</Dropdown.Item>
+									</Dropdown.List>
+								</Dropdown.Content>
+							</Dropdown>
 						) : (
 							<Link to="/login">
 								<img
