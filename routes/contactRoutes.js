@@ -3,7 +3,6 @@ import Message from '../models/Message.js';
 
 const router = express.Router();
 
-// POST: Create a new contact message
 router.post('/', async (req, res) => {
     console.log('--- CONTACT MESSAGE RECEIVED ---');
     try {
