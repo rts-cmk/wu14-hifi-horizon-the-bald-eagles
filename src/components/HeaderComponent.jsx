@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/_header.scss';
-import { Link, NavLink, useLocation } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import logo from '../assets/logo/nav-logo.svg';
 import cart from '../assets/icons/cart.svg';
 import profile from '../assets/icons/profile.svg';
