@@ -2,6 +2,7 @@
 
 This document serves as the official technical documentation for the HiFi Horizons backend API.
 - Made by Christian Reed and Sebastian Køster.
+- checkout the website live from here: https://kosterseb.github.io/HiFiHorizon
 
 ## 1. Project Overview
 
