@@ -4,10 +4,19 @@ import Product from '../models/Product.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    console.log('--- PODUCT ROUTE HIT (Attempting DB Fetch) ---');
+router.get('/random', async (req, res) => {
+    console.log('--- RANDOM PRODUCT ROUTE HIT ---');
     try {
-        // Find the single document and use .lean() for a plain JavaScript object
+        const catalog = await Product.findOne({});
+        res.json(catalog);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error ran into a problem while fetching products', error: err})
+    }
+});
+
+router.get('/', async (req, res) => {
+    console.log('--- PODUCT ROUTE HIT ---');
+    try {
         const productDoc = await Product.findOne({}).lean(); 
         
         if (!productDoc) { 
@@ -20,15 +29,6 @@ router.get('/', async (req, res) => {
     } catch (error) {
         console.error('SERVER ERROR DURING DB FETCH:', error); 
         res.status(500).json({ message: 'Server error during database query' });
-    }
-});
-
-router.get('/random', async (req, res) => {
-    try {
-        const randomProducts = await Product.aggregate([{ $sample: { size: 4 } }]);
-        res.json(randomProducts);
-    } catch (err) {
-        res.status(500).json({ message: 'Server error ran into a problem while fetching products', error: err})
     }
 });
 
