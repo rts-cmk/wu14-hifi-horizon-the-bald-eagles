@@ -137,3 +137,38 @@ Create a `.env` file in the root directory with the following variables:
 | `PORT` | The port for the server to run on (default 3000). |
 
 ---
+
+## Deployment & Hosting Architecture
+
+The HiFi Horizons platform is architected as a **Decoupled Application**, separating the static frontend from the dynamic logic of the backend.
+
+### 1. Frontend: GitHub Pages
+
+* **Hosting Model:** Static Site Hosting.
+* **Build Process:** React source code is bundled using **Vite** into minified assets.
+* **Deployment Workflow:**
+* The `gh-pages` package automates the deployment.
+* Running `npm run deploy` triggers a build and pushes the `dist` folder to a dedicated `gh-pages` branch.
+
+
+* **Routing Strategy:** Uses a `basename="/HiFiHorizon"` configuration within `BrowserRouter` to ensure path resolution matches the GitHub repository subdirectory.
+
+### 2. Backend: Render
+
+* **Hosting Model:** Web Service (Node.js).
+* **Lifecycle:** The server remains in "sleep" mode during inactivity and spins up automatically upon the first API request.
+* **Static Asset Serving:** The Express server is configured to serve physical product images via the `/images` route, which are accessed by the frontend using absolute URLs (`https://hifihorizon.onrender.com/images/...`).
+
+### 3. Cross-Origin Resource Sharing (CORS)
+
+To allow the frontend (hosted on `github.io`) to safely request data from the backend (hosted on `onrender.com`), the backend utilizes the `cors` middleware. This "handshake" ensures that only authorized domains can access the product catalog and user data.
+
+### 4. Continuous Integration Checklist
+
+When updating the project, follow these steps:
+
+1. **Backend Changes:** Push code to the main branch; Render will auto-deploy. Ensure environment variables (`MONGO_URI`) are set in the Render Dashboard.
+2. **Frontend Changes:** Update the code locally and run `npm run deploy` to refresh the GitHub Pages site.
+3. **Environment Sync:** Ensure the frontend `VITE_API_URL` (or hardcoded fetch URLs) always points to the live Render address, not `localhost`.
+
+---
