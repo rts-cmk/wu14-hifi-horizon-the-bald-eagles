@@ -50,7 +50,31 @@ export default function PaymentPage() {
 			return;
 		}
 
-		navigate('/invoice/');
+		//get payment method
+		const selectedPaymentMethod = Array.from(paymentMethods).find(
+			(method) => method.checked
+		).value;
+
+		//setup order data
+		const orderData = {
+			customerInfo: formData,
+			deliveryMethod: activeButton,
+			deliveryAddress: displayAddress,
+			selectedStore: displayShipStores.find(
+				(store) =>
+					document.querySelector(`input[name="store"]:checked`)?.value ===
+					store.id
+			),
+			cartItems: cartItems,
+			paymentMethod: selectedPaymentMethod,
+			subtotal: getCartTotal(),
+			deliveryFee: 4,
+			vat: (getCartTotal() / 100) * 25,
+			total: getCartTotal() + (getCartTotal() / 100) * 25 + 4,
+			orderDate: new Date().toISOString()
+		};
+
+		navigate('/invoice/', { state: { orderData } });
 	}
 
 	const [displayAddress, setDisplayAddress] = useState([]);
@@ -404,7 +428,14 @@ export default function PaymentPage() {
 
 									<div className="payment-page__payment-total-vat-price">
 										<p>Total price</p>
-										<p>£{(getCartTotal() + 4).toLocaleString()}</p>
+										<p>
+											£
+											{(
+												getCartTotal() +
+												(getCartTotal() / 100) * 25 +
+												4
+											).toLocaleString()}
+										</p>
 									</div>
 								</div>
 							</div>

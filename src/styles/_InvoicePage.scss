@@ -6,9 +6,18 @@
 	flex-direction: column;
 	background-color: var.$color_cream;
 	min-height: 100svh;
+	align-items: center;
 
 	main {
 		flex: 1;
 		padding: 20px;
+	}
+
+	h1 {
+		font-size: 26px;
+		font-weight: 700;
+		color: var.$color_dark_gray;
+		text-align: center;
+		margin: 40px 0 25px 0;
 	}
 }
