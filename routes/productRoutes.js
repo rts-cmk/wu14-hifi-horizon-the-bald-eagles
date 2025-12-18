@@ -23,4 +23,13 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/random', async (req, res) => {
+    try {
+        const randomProducts = await Product.aggregate([{ $sample: { size: 4 } }]);
+        res.json(randomProducts);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error ran into a problem while fetching products', error: err})
+    }
+});
+
 export default router;
