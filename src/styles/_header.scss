@@ -104,4 +104,12 @@
 		height: 1px;
 		background-color: var.$color_orange;
 	}
+
+	&__nav-item .welcome-span {
+		text-transform: uppercase;
+		margin-right: 30px;
+		padding: 10px 0 10px 10px;
+		color: var.$color_white;
+		font-size: 14px;
+	}
 }

@@ -24,7 +24,6 @@ export default function InvoiceComponent() {
 		deliveryAddress,
 		selectedStore,
 		cartItems,
-		paymentMethod,
 		subtotal,
 		deliveryFee,
 		vat,

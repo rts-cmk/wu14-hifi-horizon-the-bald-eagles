@@ -13,6 +13,7 @@ import LoginPage from './pages/LoginPage';
 import CreatePage from './pages/CreateAccountPage';
 import PaymentPage from './pages/PaymentPage.jsx';
 import InvoicePage from './pages/InvoicePage.jsx';
+import FAQPage from './pages/FAQPage.jsx';
 
 function App() {
 	return (
@@ -30,6 +31,7 @@ function App() {
 					<Route path="/cart" element={<CartPage />} />
 					<Route path="/payment" element={<PaymentPage />} />
 					<Route path="/invoice" element={<InvoicePage />} />
+					<Route path="/faq" element={<FAQPage />} />
 				</Routes>
 			</Router>
 		</ProductProvider>

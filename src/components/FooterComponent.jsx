@@ -28,19 +28,16 @@ export default function FooterComponent() {
 
 				<ul className="footer__tc">
 					<li className="footer__tc-item">
-						<Link to="#">Returns & Refunds</Link>
+						<Link to="/faq">Returns & Refunds</Link>
 					</li>
 					<li className="footer__tc-item">
-						<Link to="#">Delivery</Link>
+						<Link to="/faq">Delivery</Link>
 					</li>
 					<li className="footer__tc-item">
-						<Link to="#">Privacy Policy</Link>
+						<Link to="/faq">Privacy Policy</Link>
 					</li>
 					<li className="footer__tc-item">
-						<Link to="#">Terms & Conditions</Link>
-					</li>
-					<li className="footer__tc-item">
-						<Link to="#">FAQ</Link>
+						<Link to="/faq">Terms & Conditions</Link>
 					</li>
 				</ul>
 
