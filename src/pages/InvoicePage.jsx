@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/_InvoicePage.scss';
 import HeaderComponent from '../components/HeaderComponent';
 import FooterComponent from '../components/FooterComponent';
@@ -6,8 +6,16 @@ import CartRoute from '../components/CartRoute';
 import InvoiceComponent from '../components/InvoiceComponent';
 import printIcon from '../assets/icons/printer.svg';
 import html2pdf from 'html2pdf.js';
+import { useCart } from '../context/CartContext';
 
 export default function InvoicePage() {
+	//clear cart when invoice page loads
+	const { clearCart } = useCart();
+
+	useEffect(() => {
+		clearCart();
+	}, []);
+
 	function handlePrintClick() {
 		const invoiceElement = document.getElementById('invoice');
 		html2pdf(invoiceElement);

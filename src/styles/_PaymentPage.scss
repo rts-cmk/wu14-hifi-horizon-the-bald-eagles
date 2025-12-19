@@ -324,5 +324,11 @@
 			display: flex;
 			margin-bottom: 7px;
 		}
+
+		a {
+			text-decoration: none;
+			color: var.$color_black;
+			font-weight: 600;
+		}
 	}
 }

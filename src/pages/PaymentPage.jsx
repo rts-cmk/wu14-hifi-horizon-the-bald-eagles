@@ -10,7 +10,7 @@ import masterCardIcon from '../assets/pay/mastercard-dark.svg';
 import paypalIcon from '../assets/pay/paypal.svg';
 import applepayIcon from '../assets/pay/applepay.svg';
 import { useCart } from '../context/CartContext.jsx';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 export default function PaymentPage() {
 	// Track which button is active: 'home', 'collect', or 'postoffice'
@@ -456,7 +456,9 @@ export default function PaymentPage() {
 											<input type="checkbox" name="terms" id="terms" />
 											<p>
 												I accept the terms of trade{' '}
-												<strong>(read in new window)</strong>
+												<Link to="/faq" target="_blank" >
+													(read in new window)
+												</Link>
 											</p>
 										</label>
 									</li>
