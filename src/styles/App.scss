@@ -1,6 +1,5 @@
 //Pages
 @use 'cart';
-@use 'dropdown';
 @use 'front';
 @use 'product';
 @use 'profile';
@@ -12,5 +11,6 @@
 @use 'create-account';
 
 //Components
+@use 'dropdown';
 @use 'header';
 @use 'footer';
