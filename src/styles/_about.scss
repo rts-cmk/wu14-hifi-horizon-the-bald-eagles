@@ -1,0 +1,81 @@
+@use './reset';
+@use './variables' as var;
+
+.about-page {
+	display: flex;
+	flex-direction: column;
+	background-color: var.$color_cream;
+	min-height: 100svh;
+	align-items: center;
+	margin-top: 100px;
+
+	main {
+		display: flex;
+		flex-direction: column;
+		max-width: 1124px;
+		background-color: var.$color_white;
+		box-shadow: 1px 2px 4px rgba($color: #000000, $alpha: 0.25);
+		padding: 49px 45px;
+		gap: 32px;
+
+		h2 {
+			font-size: 16px;
+			font-weight: 700;
+			text-align: center;
+		}
+
+		.sub-title {
+			font-size: 13px;
+			font-weight: 700;
+			text-align: center;
+			color: var.$color_orange;
+		}
+
+		p {
+			font-size: 12px;
+			font-weight: 400;
+			text-align: center;
+		}
+
+		section {
+			display: flex;
+			gap: 55px;
+			align-items: flex-start;
+
+			figure {
+				flex: 1;
+				min-width: 0;
+
+				img {
+					width: 100%;
+					height: auto;
+					max-width: 491px;
+					object-fit: cover;
+				}
+			}
+
+			article {
+				flex: 1;
+				min-width: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+			}
+		}
+	}
+
+	&__header {
+		display: flex;
+		justify-content: flex-start;
+		width: 100%;
+		margin: 36px 0 53px 45px;
+		text-transform: uppercase;
+
+		h1 {
+			font-size: 48px;
+			font-weight: 600;
+			color: var.$color_dark_gray;
+			text-align: center;
+		}
+	}
+}

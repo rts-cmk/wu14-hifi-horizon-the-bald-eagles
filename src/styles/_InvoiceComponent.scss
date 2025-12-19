@@ -1,0 +1,207 @@
+@use './reset';
+@use './variables' as var;
+
+.invoice-component {
+	display: flex;
+	flex-direction: column;
+	max-width: 780px;
+	background-color: var.$color_white;
+	box-shadow: 1px 2px 4px rgba($color: #000000, $alpha: 0.25);
+	padding: 49px 45px;
+
+	//invoice header
+
+	&__invoice-header {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+
+		.column-one {
+			display: flex;
+			flex-direction: column;
+			gap: 31px;
+
+			h2 {
+				font-size: 14px;
+				text-transform: uppercase;
+				font-weight: 600;
+				color: var.$color_dark_gray;
+				margin-bottom: 7px;
+			}
+
+			li {
+				display: flex;
+				flex-direction: column;
+				font-size: 12px;
+			}
+		}
+
+		.column-two {
+			ul {
+				display: flex;
+				flex-direction: column;
+				align-items: end;
+				gap: 3px;
+
+				li {
+					display: flex;
+					align-items: end;
+					font-size: 12px;
+
+					img {
+						inline-size: 56px;
+						aspect-ratio: 1;
+						object-fit: contain;
+					}
+
+					.icon {
+						inline-size: 16px;
+						aspect-ratio: 1;
+						object-fit: contain;
+						margin-left: 5px;
+					}
+
+					&:first-child {
+						img {
+							margin-bottom: 15px;
+						}
+					}
+
+					&:nth-child(3) p,
+					&:nth-child(2) p {
+						font-weight: 800;
+					}
+				}
+			}
+		}
+	}
+
+	//Invoice mid details
+
+	&__invoice-order-details {
+		display: flex;
+		flex-direction: column;
+		align-items: end;
+
+		header {
+			width: 40%;
+			border-bottom: 2px solid var.$color_light_gray-2;
+
+			h2 {
+				font-size: 26px;
+				font-weight: 700;
+				color: var.$color_dark_gray;
+			}
+		}
+
+		div {
+			width: 40%;
+		}
+
+		li {
+			display: flex;
+			justify-content: space-between;
+			gap: 20px;
+			align-items: start;
+			margin-right: 30px;
+
+			p {
+				font-size: 12px;
+				font-weight: 100;
+			}
+		}
+	}
+
+	&__invoice-order-details-table {
+		display: flex;
+		flex-direction: column;
+		margin-top: 50px;
+
+		table {
+			font-family: 'Open Sans';
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		thead {
+			th {
+				font-size: 14px;
+				font-weight: 600;
+				text-align: right;
+				padding: 10px;
+				border-bottom: 2px solid var.$color_light_gray-2;
+			}
+			th:nth-child(1) {
+				text-align: left;
+			}
+		}
+
+		tbody {
+			tr {
+				height: 41px;
+
+				&:nth-child(even) {
+					background-color: var.$color_gray_cream;
+				}
+
+				td {
+					font-size: 14px;
+					padding: 10px;
+					margin-left: 20px;
+					text-align: right;
+				}
+
+				td:nth-child(1) {
+					width: 55%;
+					text-align: left;
+				}
+			}
+		}
+	}
+
+	//Invoice totals
+
+	&__invoice-order-totals {
+		display: flex;
+		flex-direction: column;
+		margin-top: 150px;
+		margin-bottom: 110px;
+		align-items: flex-end;
+
+		.invoice-total-row {
+			width: 307px;
+		}
+
+		li {
+			display: flex;
+			justify-content: space-between;
+			gap: 20px;
+			align-items: start;
+			margin-right: 30px;
+
+			p {
+				font-size: 14px;
+				font-weight: 400;
+			}
+		}
+
+		.invoice-order-grand-total {
+			display: flex;
+			justify-content: space-between;
+			gap: 20px;
+			align-items: center;
+			margin-right: 30px;
+			margin-top: 44px;
+			width: 307px;
+			height: 41px;
+			background-color: var.$color_dark_gray;
+			color: var.$color_cream;
+			font-size: 14px;
+			font-weight: 500;
+			padding: 11px 8px;
+		}
+	}
+	&__invoice-footer {
+		display: flex;
+		font-size: 12px;
+	}
+}

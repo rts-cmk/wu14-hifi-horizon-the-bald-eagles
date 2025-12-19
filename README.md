@@ -1,146 +1,174 @@
-# **Projektopgave HI-FI Horizon**
+# HiFi Horizons Backend Documentation
 
-## Om opgaven
-Denne opgave omhandler opsætning, navigation og hentning af data. Læs hele opgavebeskrivelsen grundigt igennem inden I stiller spørgsmål.
+This document serves as the official technical documentation for the HiFi Horizons backend API.
+- Made by Christian Reed and Sebastian Køster.
+- checkout the website live from here: https://kosterseb.github.io/HiFiHorizon
 
-## Opgavebeskrivelse
+## 1. Project Overview
 
-I skal fremstille en webapplikation til en HI-FI webbutik, som præsenterer butikkens produkter inddelt efter kategori eller producent. Brugeren af sitet skal nemt og overskueligt kunne finde rundt i de forskellige produkter og kunne fremsøge produkter vha. søgeord. Der er **udelukkende** tale om præsentation af produkterne, man skal ikke kunne handle produkter på siden.
+HiFi Horizons is a full-stack e-commerce platform for high-end audio equipment. This backend handles data persistence, product catalog management, user authentication, and customer engagement.
 
-Opgaven varer ca. 2-2.5 uger og omhandler både planlægningen og produktionen af client-side produktet. Opgaven skal planlægges, der skal udarbejdes designanalyse (identifikation af komponenter/moduler). <strike>Der skal udarbejdes user-stories til de enkelte komponenter. I skal samarbejde om projektet digitalt (eksempelvis ved hjælp af GitHub Projects), men det er også et krav, at I undervejs i processen vedligeholder et fysisk kanban-board, som kan bruges fx. ved de daglige scrum-møder.</strike>
+### Deployment & Hosting
 
-<strike>Der er afsat to dage til den indledende planlægning, hvorefter selve udførelsen af produktet afvikles i to sprints af cirka en uges varighed. I skal afholde et sprint-planning møde med jeres lærer forud for hvert sprint, ligesom der skal være et sprint-review af hvert sprint med jeres lærer.</strike>
+* **Frontend**: Hosted on **GitHub Pages**, serving the React-based user interface.
+* **Backend**: Hosted on **Render**, running the Node.js/Express server.
+* **Database**: **MongoDB Atlas**, a cloud-managed NoSQL database.
 
-Det arbejde der forventes udført når projektet er slut, er en funktionel offentlig tilgængelig (github pages eller lignende) client-side som henter data og billeder fra en (eller flere) JSON-datakilde(r). Applikationen skal være sat op, så den matcher det udleverede design.
+---
 
-Et HI-FI produkt består af et navn, en beskrivelse, en pris, et billede, samt hører til i en kategori og er knyttet til en producent. I skal selv udtænke hvordan datastrukturen stilles op i JSON.
-*(billederne findes i den medfølgende .zip fil, men ved alle de andre produktdata finder I selv på noget, benyt evt https://lipsum.com/feed/html )*
+## 2. Core Architecture
 
-### Tekniske krav
-**Client-Side** skal løses vha. HTML, CSS og Javascript(React.js), som ved hjælp af fetch-api'et henter data fra en eller flere JSON filer. Jeres CSS skal være modulær, og overholde BEM konventionen, <strike>samt principperne i SMACSS.</strike> Produktet kan designes efter mobile first princippet, men ikke nødvendigvis implementeret til begge medier *(prioriter browser varianten som den primære der produceres)*.
+### Server Entry Point (`server.js`)
+
+The server uses **Express** and **CORS** to handle requests. It serves static images and registers all API routes.
+
+```javascript
+import express from 'express';
+import cors from 'cors';
+import connectDB from './config/db.js';
+import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
+import newsletterRoutes from './routes/newsletterRoutes.js';
+
+// Connect to MongoDB
+connectDB();
+const app = express();
+
+app.use(cors());
+app.use(express.json()); 
+
+// Static folder for assets and product images
+app.use(express.static('public'));
+app.use('/images', express.static('images'));
+
+// API Routes
+app.use('/api/products', productRoutes); 
+app.use('/api/users', userRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/newsletter', newsletterRoutes);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+```
+
+### Database Connection (`db.js`)
+
+Uses **Mongoose** to establish a secure connection to MongoDB Atlas using environment variables.
+
+```javascript
+import mongoose from 'mongoose';
+import 'dotenv/config';
+
+const MONGODB_URI = process.env.MONGO_URI; 
+
+const connectDB = async () => {
+    try {
+        await mongoose.connect(MONGODB_URI, {});
+        console.log('MongoDB connected successfully!');
+    } catch (err) {
+        console.error('MongoDB connection failed:', err.message);
+        process.exit(1); 
+    }
+};
+
+export default connectDB;
+
+```
+
+---
+
+## 3. API Route Documentation
+
+### Products (`/api/products`)
+
+Manages the retrieval of the audio equipment catalog.
+
+* **GET `/**`: Returns the entire catalog document.
+* **GET `/random**`: Fetches the catalog document to allow for frontend-side product randomization.
+
+### Users (`/api/users`)
+
+Handles customer accounts and authentication.
+
+* **POST `/register**`: Registers a new user with full profile details.
+* **POST `/login**`: Authenticates a user and returns a profile (password excluded).
+* **PUT `/update/:id**`: Updates existing user profile information.
+
+### Customer Engagement
+
+* **Newsletter (`/api/newsletter`)**: **POST `/**` saves a unique email address for subscriptions.
+* **Contact (`/api/contact`)**: **POST `/**` records customer inquiries into the database.
+
+---
+
+## 4. Data Models
+
+### Catalog Schema (`Product.js`)
+
+The catalog is optimized for a nested structure: **Category > Brand > Model**.
+
+```javascript
+const productDetailSchema = mongoose.Schema({
+    image: { type: String, required: true },
+    description: { type: String, required: true },
+    'in-stock': { type: Boolean, required: true },
+    price: { type: Number, required: true },
+    color: [{ type: String }], 
+    specifications: { type: Map, of: String }, 
+}, { _id: false }); 
+
+```
+
+### User Schema (`User.js`)
+
+Stores comprehensive shipping and contact information.
+
+---
+
+## 5. Environment Configuration
+
+Create a `.env` file in the root directory with the following variables:
+
+| Variable | Description |
+| --- | --- |
+| `MONGO_URI` | Your MongoDB Atlas connection string. |
+| `PORT` | The port for the server to run on (default 3000). |
+
+---
+
+## Deployment & Hosting Architecture
+
+The HiFi Horizons platform is architected as a **Decoupled Application**, separating the static frontend from the dynamic logic of the backend.
+
+### 1. Frontend: GitHub Pages
+
+* **Hosting Model:** Static Site Hosting.
+* **Build Process:** React source code is bundled using **Vite** into minified assets.
+* **Deployment Workflow:**
+* The `gh-pages` package automates the deployment.
+* Running `npm run deploy` triggers a build and pushes the `dist` folder to a dedicated `gh-pages` branch.
 
 
-### Planlægning
-* Layoutanalyse - identificer komponenter/moduler(BEM blokke) i layoutet. <strike>Husk at analysere indefra og ud.</strike>
-* <strike>User stories - skriv user stories til alle komponenter.</strike>
-* <strike>Udarbejd 'definition of done' på de enkelte user-stories. Hvilke kriterier skal komponentet/modulet opfylde for at være færdigt? Hvad skal den som laver review kontrollere om er i orden?</strike>
-* <strike>SPRINT PLANNING (husk at invitere jeres lærer) Prioriter jeres user-stories og estimer dem, i vælger at arbejde med i det første sprint (planning poker)</strike>
+* **Routing Strategy:** Uses a `basename="/HiFiHorizon"` configuration within `BrowserRouter` to ensure path resolution matches the GitHub repository subdirectory.
 
-### Forslag til arbejdsprocess
-* Opsæt HTML sider med navigation og dummy-data (statisk site)
-* Design datastrukturer i JSON. (en test-fil med tre eller fire produkter som kan bruges i udviklingsfasen)
-* Programmér funktioner til dataudtræk
-* Byg alle nødvendige fetch, og udskriv data fra fetch.
-* Opret datafiler (JSON)
-* Dokumentér kode og funktionalitet i markdown-filer 
+### 2. Backend: Render
 
+* **Hosting Model:** Web Service (Node.js).
+* **Lifecycle:** The server remains in "sleep" mode during inactivity and spins up automatically upon the first API request.
+* **Static Asset Serving:** The Express server is configured to serve physical product images via the `/images` route, which are accessed by the frontend using absolute URLs (`https://hifihorizon.onrender.com/images/...`).
 
-### Sider og indhold
-* Forside
-* Brand-liste
-* Shop-kategorier
-* Kategori-liste
-* Enkelt produktvisning
- 
-### Forsiden 
-* Forsidetekst og billeder af produkter
-* Visning af ét eller flere udvalgte produkter (kan være de senest oprettede, et tilfældigt produkt eller andet du finder relevant)
- 
-### Produktsider
-Der er flere forskellige funktioner under produkter:
-* Visning af alle produkter inden for en bestemt kategori, uden produkt beskrivelse
-* Visning af alle produkter der hører til en bestemt producent, uden produkt beskrivelse
-* Visning af ét produkt ved klik på et produkt fra listerne
-* Visning af produkter efter søgning 
+### 3. Cross-Origin Resource Sharing (CORS)
 
-Alle produkter hentes via et "API"(JSON) og udskrives med fetch, alle produkter vises med deres billede.
- 
-### Alle sider 
-* Menu 
-* Fritekst-søgefunktion til produkter og producenter (visning på produktsiden) 
-* Footer med kontaktinfo 
+To allow the frontend (hosted on `github.io`) to safely request data from the backend (hosted on `onrender.com`), the backend utilizes the `cors` middleware. This "handshake" ensures that only authorized domains can access the product catalog and user data.
 
-### Github
-* <strike>Projektet opsættes i et GitHub repo - husk at invitere din lærer som collaborator.</strike>
-* Projektet accepteres som en GitHub assignment.
-* Der skal *committes ved væsentlige ændringer eller færdiggørelse af en funktionalitet* - og altid inden fyraften.
-* Alle commit tekster på GitHub skal kort beskrive ændringerne. **Der må ikke skrives ligegyldige beskrivelser!**.
+### 4. Continuous Integration Checklist
 
-### Billedfiler
-Alle billeder ligger i en zippet fil fordelt i mapper.
+When updating the project, follow these steps:
 
-I vælger om alle billeder skal ligge i én mappe eller om I vil bevare mappestrukturen.
+1. **Backend Changes:** Push code to the main branch; Render will auto-deploy. Ensure environment variables (`MONGO_URI`) are set in the Render Dashboard.
+2. **Frontend Changes:** Update the code locally and run `npm run deploy` to refresh the GitHub Pages site.
+3. **Environment Sync:** Ensure the frontend `VITE_API_URL` (or hardcoded fetch URLs) always points to the live Render address, not `localhost`.
 
-Brug følgende liste, hvis I er i tvivl om hvilke kategorier de forskellige billeder tilhører:
-
-  
-**CD Afspillere**
-
-    * creek_classic_cd.jpg
-    * creek_Destiny_CD.jpg
-    * creek_evo_cd.jpg
-    * Exp_2010S_CD.gif
-
-
-**DVD Afspillere**
-
-    * creek_classic.jpg
-    * exposure_2010S.jpg
-    * parasound_d200.jpg
-    * parasound_halod3.jpg
-
-**Effektforstærkere**
-
-    * manley_mahi.jpg
-    * manley_neoclassic300b.jpg
-    * manley_snapper.jpg
-    * parasound_haloa23.jpg
-
-
-**Forforstærkere**
-
-    * Creek_OBH_22_Passive_Preamp.jpg
-    * parasound_classic7100.jpg
-    * parasound_halop3.jpg
-    * Project_prebox.jpg
-
-
-**Højtalere**
-
-    * boesendorfer_vcs_wall.gif
-    * epos_m5.gif
-    * harbeth_hl7es2.jpg
-    * harbeth_monitor30.jpg
-    * harbeth_p3es2.jpg
-
-
-**Int. Forstærkere**
-
-    * creek_a50I.jpg
-    * creek_classic5350SE.jpg
-    * creek_destinyamp.jpg
-    * manley_snapper.jpg
-    * Manley_Stingray.jpg
-
-
-**Pladespillere**
-
-    * Pro_ject_Debut_3_bl.jpg
-    * Pro_ject_Debut_III_red_1.jpg
-    * Pro_ject_Debut_III_yellow_1.jpg
-    * Pro_ject_rpm_5.jpg
-    * Pro_ject_rpm10.jpg
-
-
-**Rørforstærkere**
-
-    * jolida_JD102b.jpg
-    * jolida_JD202a.jpg
-    * jolida_JD300b.jpg
-    * jolida_JD302b.jpg
-    * jolida_JD502b.jpg 
- 
-## EKSTRAOPGAVE
-Hvis I er hurtigt færdige!
-
-Indsæt reklmebannere på hjemmesiden. Du skal selv beslutte hvor på siden reklamebannere vil passe ind. Find et API på nettet, som lader dig fetche bannere og indsæt vilkårlige bannere på hjemmesiden.
+---

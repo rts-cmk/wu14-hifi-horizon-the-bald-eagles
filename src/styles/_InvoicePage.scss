@@ -1,0 +1,44 @@
+@use './reset';
+@use './variables' as var;
+
+.invoice-page {
+	display: flex;
+	flex-direction: column;
+	background-color: var.$color_cream;
+	min-height: 100svh;
+	align-items: center;
+
+	main {
+		flex: 1;
+		padding: 20px;
+	}
+
+	h1 {
+		font-size: 26px;
+		font-weight: 700;
+		color: var.$color_dark_gray;
+		text-align: center;
+		margin: 40px 0 25px 0;
+	}
+
+	.print-container {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.print-button {
+		margin-bottom: 10px;
+		border: none;
+	}
+
+	.print-icon {
+		height: 30px;
+		width: 30px;
+		opacity: 50%;
+		cursor: pointer;
+	}
+
+	.print-icon:hover {
+		opacity: 80%;
+	}
+}
