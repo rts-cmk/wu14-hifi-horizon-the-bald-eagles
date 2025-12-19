@@ -31,7 +31,7 @@ export default function InvoiceComponent() {
 		orderDate
 	} = orderData;
 	return (
-		<div className="invoice-component">
+		<div className="invoice-component" id="invoice">
 			<div className="invoice-component__invoice">
 				<header className="invoice-component__invoice-header">
 					<div className="column-one">
